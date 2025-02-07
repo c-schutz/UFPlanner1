@@ -1,6 +1,32 @@
 UFPlanner SWE project
 
-Install Guide:
+Dependencies:
+Install Node.js from "https://nodejs.org/en/download"
+I am on version 11
+
+Make sure you have vite version 16.0.11 installed.
+You can do this by running "npm install vite@16.0.11" after installing Node
+
+Run the project:
+1. copy the https (or ssh if you have it setup) using the code button on the main github branch
+2. Go into terminal on vscode (or whatever environment you would like to use) and run 
+"git clone --copied link--" 
+3. Once it is done installing in your environment run 
+"cd UFPlanner1" and "npm install"
+4. Open two terminals. In one run
+"cd frontend", "npm install"
+In the other
+"cd server"
+4. To run the project type in the server terminal
+"npm start"
+and 
+"npm run dev"
+In the frontend terminal
+5. Vite should run and you should see a clickable localhost link
+6. Click this link to see the project
+
+
+Environment Setup:
 1. run "npm install vite@6.0.11"
 2. Edit your package.json to contain this
 {
