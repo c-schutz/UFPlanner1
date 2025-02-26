@@ -12,7 +12,7 @@ Run the project:
 2. Go into terminal on vscode (or whatever environment you would like to use) and run 
 "git clone --copied link--" 
 3. Once it is done installing in your environment run 
-"cd UFPlanner1" and "npm install"
+"cd UFPlanner1" (or whatever your branch is named) and "npm install"
 4. Open two terminals. In one run
 "cd frontend", "npm install"
 In the other
