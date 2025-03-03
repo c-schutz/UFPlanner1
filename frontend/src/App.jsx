@@ -1,7 +1,12 @@
 // client/src/App.js
 
-import {React, useEffect, useState} from "react";
+import { React, useEffect, useState } from "react";
 import "./App.css";
+import { Routes, Route } from 'react-router-dom';
+import About from "./about/About";
+import Budget from "./budget/Budget";
+import Account from "./account/Account";
+import Navbar from './components/Navbar';
 
 function App() {
   const [data, setData] = useState(null);
@@ -13,11 +18,26 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>{!data ? "Loading..." : data}</p>
-      </header>
-    </div>
+    <>
+      <Navbar/>
+      <Routes>
+        <Route path='*' element={<About/>}>
+        </Route>
+        <Route path='About' element={<About/>}>
+        </Route>
+        <Route path='Budget' element={<Budget/>}>
+        </Route>
+        <Route path='Account' element={<Account/>}>
+        </Route>
+      </Routes>
+
+      
+      {/* <div className="App">
+        <header className="App-header">
+          <p>{!data ? "Loading..." : data}</p>
+        </header>
+      </div> */}
+    </>
   );
 }
 
