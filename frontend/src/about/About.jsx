@@ -1,3 +1,5 @@
+import './textstyle.css';
+
 function About() {
     return (
         <>
