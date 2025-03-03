@@ -1,5 +1,5 @@
-const express = require("express");
-const cors = require("cors"); // Import the CORS package
+import express from "express";
+import cors from "cors"; // Import the CORS package
 
 const PORT = process.env.PORT || 3001;
 const app = express();

@@ -15,9 +15,7 @@ Run the project:
 "cd UFPlanner1" (or whatever your branch is named) and "npm install"
 4. Open two terminals. In one run
 "cd frontend", "npm install"
-In the other
-"cd server"
-4. To run the project type in the server terminal
+4. To run the project type in the non frontend terminal
 "npm start"
 and 
 "npm run dev"

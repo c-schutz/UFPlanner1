@@ -8,10 +8,8 @@ const pool = mysql.createPool({
 }).promise()
 
 const result = await pool.query("SELECT * from  sys_config") //gets metadata from sys_config table within sys database
-//console.log(result)
+console.log(result)
 
-const row0col0 = result[0][0]; //gets first item
-console.log(row0col0);
 
 
 

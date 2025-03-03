@@ -18,8 +18,12 @@ nav{
 
 /* Font taken from google fonts */
 .links{
-    font-size: 3vh;
+    font-size: 5vh;
     font-family: "Lato", serif; 
+}
+
+.links:hover{
+    opacity: 70%;
 }
 
 .link1{
@@ -32,4 +36,39 @@ nav{
 
 .nospace{
     position: absolute;
+}
+
+h1{
+    font-family: "Lato", serif;
+    text-align: center;
+    font-size: 7vh;
+}
+
+p{
+    font-family: "Lato", serif;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    margin-bottom: 10vh;
+    font-size: 3.5vh;
+    text-align: center;
+    line-height: 1.5;
+
+}
+
+hr{
+    margin: .2vw;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-width: .3vh;
+    border-style: solid;
+    border-radius: .1vh;  
+}
+
+.footer{
+    font-family: "Lato", serif;
+    padding-top: 0;
+    margin-top: 0;
+    margin-left: 2vw;
+    font-size: 2.5vh;
+    text-align: left
 }
