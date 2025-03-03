@@ -18,8 +18,12 @@ nav{
 
 /* Font taken from google fonts */
 .links{
-    font-size: 3vh;
+    font-size: 5vh;
     font-family: "Lato", serif; 
+}
+
+.links:hover{
+    opacity: 70%;
 }
 
 .link1{
@@ -33,3 +37,4 @@ nav{
 .nospace{
     position: absolute;
 }
+
