@@ -7,6 +7,8 @@ import About from "./about/About";
 import Budget from "./budget/Budget";
 import Account from "./account/Account";
 import Navbar from './components/Navbar';
+import Login from './account/Login'; 
+import Signup from "./account/Signup"
 
 function App() {
   const [data, setData] = useState(null);
@@ -28,6 +30,10 @@ function App() {
         <Route path='Budget' element={<Budget/>}>
         </Route>
         <Route path='Account' element={<Account/>}>
+        </Route>
+        <Route path='Account/Login' element={<Login/>}>
+        </Route>
+        <Route path='Account/Signup' element={<Signup/>}>
         </Route>
       </Routes>
 
