@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -15,24 +16,30 @@ html, body {
     border-radius: 5px;
     cursor: pointer;
     display: inline-flex;
-    align-items: center; 
+    align-items: center;
     justify-content: center;
+    margin-left: 2vw;
+    margin-top: 2vh;
 }
+
+/* .new-budget-button:hover {
+    opacity: 80%;
+} */
 
 .new-budget-button span {
     margin-right: 5px;
 }
 
-.bhr{
+.bhr {
     margin: 0;
     margin-bottom: 0;
     padding-bottom: 0;
     border-width: .3vh;
     border-style: solid;
-    border-radius: .1vh;  
+    border-radius: .1vh;
 }
 
-.btitle{
+.btitle {
     font-family: "Lato", serif;
     text-align: center;
     font-size: 4vh;
