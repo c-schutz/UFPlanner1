@@ -17,6 +17,7 @@ function App() {
     fetch("http://localhost:3001/")
       .then((res) => res.json())
       .then((data) => setData(data.message));
+      console.log(data);
   }, []);
 
   return (

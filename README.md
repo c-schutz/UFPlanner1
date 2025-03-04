@@ -17,7 +17,7 @@ Run the project:
 "cd frontend", "npm install"
 4. To run the project type in the non frontend terminal
 "npm start"
-and 
+and
 "npm run dev"
 In the frontend terminal
 5. Vite should run and you should see a clickable localhost link
