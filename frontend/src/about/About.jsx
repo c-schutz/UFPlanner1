@@ -28,7 +28,7 @@ function About() {
                 user-friendly and customizable budget creation tool specifically catered toward college students
                 such as ourselves.
             </p>
-            <hr></hr>
+            <hr className="ahr"></hr>
             <p className="footer">
                 <i>Copyright ME :7. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;All Rights Reserved.</i>
             </p>

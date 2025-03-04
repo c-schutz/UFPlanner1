@@ -1,0 +1,41 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.new-budget-button {
+    margin-top: 2vh;
+    background-color: lightcoral;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center; 
+    justify-content: center;
+}
+
+.new-budget-button span {
+    margin-right: 5px;
+}
+
+.bhr{
+    margin: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-width: .3vh;
+    border-style: solid;
+    border-radius: .1vh;  
+}
+
+.btitle{
+    font-family: "Lato", serif;
+    text-align: center;
+    font-size: 4vh;
+    margin: 0;
+    padding: 0;
+}
