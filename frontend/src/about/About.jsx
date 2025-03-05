@@ -1,8 +1,10 @@
 import './textstyle.css';
+import Navbar from '../components/Navbar';
 
 function About() {
     return (
         <>
+            <Navbar />
             <title>
                 UFPlanner About
             </title>
