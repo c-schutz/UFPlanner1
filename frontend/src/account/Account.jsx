@@ -1,8 +1,12 @@
 import { Link, Routes, Route } from 'react-router-dom';
 import Login from "./Login"
 import Signup from "./Signup"
+import Navbar from '../components/Navbar';
+
 const Account = () => {
-    return ( 
+  return (
+    <>
+      <Navbar />
       <div>
         <h2>Account Page</h2>
         <nav>
@@ -20,7 +24,8 @@ const Account = () => {
           <Route path="signup" element={<Signup />} />
         </Routes>
       </div>
-    );
-  };
+    </>
+  );
+};
 
 export default Account;

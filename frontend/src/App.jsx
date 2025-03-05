@@ -9,6 +9,9 @@ import Account from "./account/Account";
 import Navbar from './components/Navbar';
 import Login from './account/Login'; 
 import Signup from "./account/Signup"
+import Questionnaire from "./budget/Questionnaire";
+import Banking from "./budget/Banking";
+import Allocation from "./budget/Allocation";
 
 function App() {
   const [data, setData] = useState(null);
@@ -22,7 +25,6 @@ function App() {
 
   return (
     <>
-      <Navbar/>
       <Routes>
         <Route path='*' element={<About/>}>
         </Route>
@@ -35,6 +37,12 @@ function App() {
         <Route path='Account/Login' element={<Login/>}>
         </Route>
         <Route path='Account/Signup' element={<Signup/>}>
+        </Route>
+        <Route path='Budget/Questionnaire' element={<Questionnaire/>}>
+        </Route>
+        <Route path='Budget/Banking' element={<Banking/>}>
+        </Route>
+        <Route path='Budget/Allocation' element={<Allocation/>}>
         </Route>
       </Routes>
 
