@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import bankingcats from './bankingcats';
 
 function Banking() {
     const navigate = useNavigate();
 
-    const [categories, setCategories] = useState([
-        { id: 1, name: 'Savings', value: '' },
-        { id: 2, name: 'Investments', value: '' },
-        { id: 3, name: 'Expenses', value: '' }
-    ]);
+    const [categories, setCategories] = useState(()=>{
+        if(localStorage.getItem("localBankingCats") == null){
+            return bankingcats;
+        }else{
+            return JSON.parse(localStorage.getItem("localBankingCats"));
+        }
+    });
 
     const handleInputChange = (id, newValue) => {
         const newCategories = categories.map(category =>
@@ -32,6 +35,7 @@ function Banking() {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log('Banking Data:', categories);
+        localStorage.setItem('localBankingCats', JSON.stringify(categories));
         navigate('/Budget/Allocation');
     };
 
