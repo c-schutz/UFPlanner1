@@ -5,16 +5,53 @@ import { useNavigate } from 'react-router-dom';
 function Allocation(){
     const navigate = useNavigate();
     const allocationCategories = cats;
-    console.log(allocationCategories);
+    //console.log(allocationCategories);
     
-    const [categories, setCategories] = useState(allocationCategories);
+    const [categories, setCategories] = useState(() =>{
+        if(localStorage.getItem('localAlloCats') == null){
+            return cats;
+        }else{
+            return JSON.parse(localStorage.getItem('localAlloCats'));
+        }
+    });
 
-    const handleInputChange = (id, newValue) => {
+    function saveToLocalStorage(key, data) {
+        return new Promise((resolve, reject) => {
+            try {
+                localStorage.setItem(key, JSON.stringify(data));
+                resolve(); 
+            } catch (error) {
+                localStorage.removeItem(key);
+                reject(error);
+            }
+        });
+    }
+
+    async function handleInputChange(id, newValue) {
+    
+        // First, compute the new categories array
         const newCategories = categories.map(category =>
             category.id === id ? { ...category, value: newValue } : category
         );
+    
+        // Update state
         setCategories(newCategories);
-    };
+    
+        // Define a function that returns a promise to handle localStorage asynchronously
+        const saveToLocalStorage = (key, data) => new Promise((resolve, reject) => {
+            try {
+                localStorage.setItem(key, JSON.stringify(data));
+                resolve();
+            } catch (error) {
+                console.error("Failed to save data to localStorage:", error);
+                localStorage.removeItem(key);
+                reject(error);
+            }
+        });
+    
+        // Use the updated categories for saving to local storage
+        await saveToLocalStorage('localAlloCats', newCategories);
+    }
 
     const addCategory = () => {
         const categoryName = prompt("Enter the new category name:");
@@ -25,12 +62,14 @@ function Allocation(){
                 value: ''
             };
             setCategories([...categories, newCategory]);
+            localStorage.setItem('localAlloCats', JSON.stringify(categories));
         }
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('Banking Data:', categories);
+        console.log(categories);
+        localStorage.clear(); //clears after form is submitted, to change later
         navigate('/Budget');
     };
 

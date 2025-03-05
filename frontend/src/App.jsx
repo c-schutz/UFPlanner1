@@ -16,12 +16,12 @@ import Allocation from "./budget/Allocation";
 function App() {
   const [data, setData] = useState(null);
 
-  useEffect(() => {
-    fetch("http://localhost:3001/")
-      .then((res) => res.json())
-      .then((data) => setData(data.message));
-      console.log(data);
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://localhost:3001/")
+  //     .then((res) => res.json())
+  //     .then((data) => setData(data.message));
+  //     console.log(data);
+  // }, []);
 
   return (
     <>
