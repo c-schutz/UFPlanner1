@@ -1,13 +1,28 @@
 const questions = [
     {
        id: 1,
-       question: "I'm testing a question!",
-       options: ["okay", "if you say so"]
+       question: "Question 1",
+       options: ["yes", "no"]
     },
     {
-       id: 2,
-       question: "question 2",
-       options: ["ans1", "ans2"]
+      id: 2,
+      question: "Question 2",
+      options: ["yes", "no"]
+   },
+   {
+      id: 3,
+      question: "Question 3",
+      options: ["yes", "no"]
+   },
+   {
+      id: 4,
+      question: "Question 4",
+      options: ["yes", "no"]
+   },
+    {
+       id: 5,
+       question: "Question 5",
+       options: ["yes", "no"]
     }
  ];
  

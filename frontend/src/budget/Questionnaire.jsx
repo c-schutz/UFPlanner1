@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import questions from './questions';
 import { useNavigate } from 'react-router-dom';
+import { motion, useAnimate } from "motion/react";
+import './qstyles.css';
 
 function Questionnaire() {
     const [answers, setAnswers] = useState(() => {
@@ -30,30 +32,42 @@ function Questionnaire() {
 
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                {questions.map((question) => (
-                    <div key={question.id}>
-                        <h3>{question.question}</h3>
-                        {question.options.map((option) => (
-                            <label key={option}>
-                                <input
-                                    type="radio"
-                                    value={option}
-                                    checked={answers[question.id] === option}
-                                    onChange={() => handleOptionChange(question.id, option)}
-                                />
-                                {option}
-                            </label>
-                        ))}
+        <>
+            <div className='formHandle'>
+                <form onSubmit={handleSubmit} className='qForm'>
+                    {questions.map((question) => (
+                        <div key={question.id} className='questions'>
+                            <h3 className='questionTitle'>{question.question}</h3>
+                            <div className='ansSeparation'>
+                                {question.options.map((option) => (
+                                    <label key={option} className='lStyle'>
+                                        <input
+                                            type="radio"
+                                            value={option}
+                                            checked={answers[question.id] === option}
+                                            onChange={() => handleOptionChange(question.id, option)}
+                                        />
+                                        {option}
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                    <div className='c'>
+                        <div className="buttonContainer">
+                            <motion.button type="button" className='buttons' onClick={backClick}
+                                whileHover={{ scale: 1.1 }}>
+                                Back
+                            </motion.button>
+                            <motion.button type="submit" className='buttons'
+                                whileHover={{ scale: 1.1 }}>
+                                Submit Answers</motion.button>
+                        </div>
                     </div>
-                ))}
-                <button type="submit">Submit Answers</button>
-            </form>
-            <div className="navigation-buttons">
-                <button type="button" onClick={backClick}>Back</button>
+                </form>
             </div>
-        </div>
+        </>
+
     );
 }
 
