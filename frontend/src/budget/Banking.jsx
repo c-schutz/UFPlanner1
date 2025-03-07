@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import bankingcats from './bankingcats';
+import { motion, useAnimate } from "motion/react";
+import './bankingstyles.css';
 
 function Banking() {
     const navigate = useNavigate();
 
-    const [categories, setCategories] = useState(()=>{
-        if(localStorage.getItem("localBankingCats") == null){
+    const [categories, setCategories] = useState(() => {
+        if (localStorage.getItem("localBankingCats") == null) {
             return bankingcats;
-        }else{
+        } else {
             return JSON.parse(localStorage.getItem("localBankingCats"));
         }
     });
@@ -39,31 +41,48 @@ function Banking() {
         navigate('/Budget/Allocation');
     };
 
-    const backClick = () =>{
+    const backClick = () => {
         navigate(-1);
-      }
+    }
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
-                {categories.map((category) => (
-                    <div key={category.id}>
-                        <label>
-                            {category.name}:
-                            <input
-                                type="number"
-                                value={category.value}
-                                onChange={(e) => handleInputChange(category.id, e.target.value)}
-                            />
-                        </label>
-                        <br />
+            <p>
+                Input Banking Information
+            </p>
+            <hr className="ahr"></hr>
+            <div className='formControl'>
+                <form onSubmit={handleSubmit} className='form'>
+                    {categories.map((category) => (
+                        <div key={category.id}>
+                            <label className='lStyle2'>
+                                {category.name}:
+                                <input
+                                    type="number"
+                                    value={category.value}
+                                    onChange={(e) => handleInputChange(category.id, e.target.value)}
+                                />
+                            </label>
+                            <br />
+                        </div>
+                    ))}
+                    <div className='c'>
+                        <div className="buttonContainer">
+                            <motion.button type="button" onClick={backClick} className='buttons'
+                                whileHover={{ scale: 1.1 }}>
+                                Back
+                            </motion.button>
+                            <motion.button type="button" onClick={addCategory} className='buttons'
+                                whileHover={{ scale: 1.1 }}>
+                                Add Category
+                            </motion.button>
+                            <motion.button type="submit" className='buttons'
+                                whileHover={{ scale: 1.1 }}>
+                                Submit Data
+                            </motion.button>
+                        </div>
                     </div>
-                ))}
-                <button type="button" onClick={addCategory}>Add Category</button>
-                <button type="submit">Submit Data</button>
-            </form>
-            <div className="navigation-buttons">
-                <button type="button" onClick={backClick}>Back</button>
+                </form>
             </div>
         </>
     );

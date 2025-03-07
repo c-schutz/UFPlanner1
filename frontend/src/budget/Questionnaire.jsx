@@ -33,6 +33,10 @@ function Questionnaire() {
 
     return (
         <>
+            <p>
+                Input your budgetting information here!
+            </p>
+            <hr className="ahr"></hr>
             <div className='formHandle'>
                 <form onSubmit={handleSubmit} className='qForm'>
                     {questions.map((question) => (
