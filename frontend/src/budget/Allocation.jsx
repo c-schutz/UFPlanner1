@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import cats from './alloccats';
 import { useNavigate } from 'react-router-dom';
+import { motion, useAnimate } from "motion/react";
+import './bankingstyles.css';
 
-function Allocation(){
+function Allocation() {
     const navigate = useNavigate();
     const allocationCategories = cats;
     //console.log(allocationCategories);
-    
-    const [categories, setCategories] = useState(() =>{
-        if(localStorage.getItem('localAlloCats') == null){
+
+    const [categories, setCategories] = useState(() => {
+        if (localStorage.getItem('localAlloCats') == null) {
             return cats;
-        }else{
+        } else {
             return JSON.parse(localStorage.getItem('localAlloCats'));
         }
     });
@@ -19,7 +21,7 @@ function Allocation(){
         return new Promise((resolve, reject) => {
             try {
                 localStorage.setItem(key, JSON.stringify(data));
-                resolve(); 
+                resolve();
             } catch (error) {
                 localStorage.removeItem(key);
                 reject(error);
@@ -28,15 +30,15 @@ function Allocation(){
     }
 
     async function handleInputChange(id, newValue) {
-    
+
         // First, compute the new categories array
         const newCategories = categories.map(category =>
             category.id === id ? { ...category, value: newValue } : category
         );
-    
+
         // Update state
         setCategories(newCategories);
-    
+
         // Define a function that returns a promise to handle localStorage asynchronously
         const saveToLocalStorage = (key, data) => new Promise((resolve, reject) => {
             try {
@@ -48,7 +50,7 @@ function Allocation(){
                 reject(error);
             }
         });
-    
+
         // Use the updated categories for saving to local storage
         await saveToLocalStorage('localAlloCats', newCategories);
     }
@@ -73,31 +75,48 @@ function Allocation(){
         navigate('/Budget');
     };
 
-    const backClick = () =>{
+    const backClick = () => {
         navigate(-1);
-      }
+    }
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
-                {categories.map((category) => (
-                    <div key={category.id}>
-                        <label>
-                            {category.name}:
-                            <input
-                                type="number"
-                                value={category.value}
-                                onChange={(e) => handleInputChange(category.id, e.target.value)}
-                            />
-                        </label>
-                        <br />
+            <p>
+                Enter (percentage) allocation amounts.
+            </p>
+            <hr className="ahr"></hr>
+            <div className='formControl'>
+                <form onSubmit={handleSubmit} className='form'>
+                    {categories.map((category) => (
+                        <div key={category.id}>
+                            <label classname='lStyle2'>
+                                {category.name}:
+                                <input
+                                    type="number"
+                                    value={category.value}
+                                    onChange={(e) => handleInputChange(category.id, e.target.value)}
+                                />
+                            </label>
+                            <br />
+                        </div>
+                    ))}
+                    <div className='c'>
+                        <div className="buttonContainer">
+                            <motion.button type="button" onClick={backClick} className='buttons'
+                                whileHover={{ scale: 1.1 }}>
+                                Back
+                            </motion.button>
+                            <motion.button type="button" onClick={addCategory} className='buttons'
+                                whileHover={{ scale: 1.1 }}>
+                                Add Category
+                            </motion.button>
+                            <motion.button type="submit" className='buttons'
+                                whileHover={{ scale: 1.1 }}>
+                                Submit Data
+                            </motion.button>
+                        </div>
                     </div>
-                ))}
-                <button type="button" onClick={addCategory}>Add Category</button>
-                <button type="submit">Submit Data</button>
-            </form>
-            <div className="navigation-buttons">
-                <button type="button" onClick={backClick}>Back</button>
+                </form>
             </div>
         </>
     );
