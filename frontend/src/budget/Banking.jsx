@@ -42,7 +42,19 @@ function Banking() {
     };
 
     const backClick = () => {
-        navigate(-1);
+        navigate('/Budget/Questionnaire');
+    }
+
+    const checkInputs = (event) => {
+        var sum = 0;
+        categories.forEach((value, index) => {
+            sum += Number(value.value);
+        });
+        if (sum == 0) {
+            alert("No banking data entered.");
+        } else {
+            handleSubmit(event);
+        }
     }
 
     return (
@@ -52,10 +64,10 @@ function Banking() {
             </p>
             <hr className="ahr"></hr>
             <div className='formControl'>
-                <form onSubmit={handleSubmit} className='form'>
+                <form onSubmit={checkInputs} className='form'>
                     {categories.map((category) => (
                         <div key={category.id}>
-                            <label className='lStyle2'>
+                            <label className='lStyle'>
                                 {category.name}:
                                 <input
                                     type="number"

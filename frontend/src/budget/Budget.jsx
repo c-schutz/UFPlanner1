@@ -19,7 +19,6 @@ function Budget() {
     const handleClick = () => {
         if (!delay) {
             setDelay(true); //debounce
-            console.log("test");
             myAnimation();
             myAnimation().then(() => {
                 navigate('/Budget/Questionnaire');
