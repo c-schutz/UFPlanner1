@@ -1,6 +1,6 @@
 import {React, useState} from "react";
 
-const Signup = () => {
+const Signup = ({onStatusChange}) => {
     const[email, setEmail] = useState("");
     const [passwotd, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -9,9 +9,14 @@ const Signup = () => {
         console.log("Signup email:", email, "password", password);
     };
     return (
+        <>
+        <div>Sign up Feature</div>
         <div>
-            <h2>Signup</h2>
+        <button onClick={() => onStatusChange('summary')}>Sign Up</button>
         </div>
+        <button onClick={() => onStatusChange('login')}>Back to Login</button>
+        </>
+        
     );
 };
 
