@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import questions from './questions';
 import { useNavigate } from 'react-router-dom';
 import { motion, useAnimate } from "motion/react";
 import './qstyles.css';
 
 function Questionnaire() {
+
     const [answers, setAnswers] = useState(() => {
         const savedAnswers = localStorage.getItem('answers');
-        return savedAnswers ? JSON.parse(savedAnswers) : {};
+        if (savedAnswers) {
+            return JSON.parse(savedAnswers);
+        } else {
+            const initialAnswers = {};
+            questions.forEach(question => {
+                initialAnswers[question.id] = "no"; // no initialization if there is no data stored
+            });
+            return initialAnswers;
+        }
     });
 
     const navigate = useNavigate();
@@ -21,15 +30,15 @@ function Questionnaire() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('Submitted Answers:', answers);
+        //console.log('Submitted Answers:', answers);
         localStorage.setItem('answers', JSON.stringify(answers));
         navigate('/Budget/Banking');
     };
 
     const backClick = () => {
-        navigate(-1);
+        localStorage.clear();
+        navigate('/Budget');
     }
-
 
     return (
         <>

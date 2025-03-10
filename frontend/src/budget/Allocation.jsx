@@ -17,18 +17,6 @@ function Allocation() {
         }
     });
 
-    function saveToLocalStorage(key, data) {
-        return new Promise((resolve, reject) => {
-            try {
-                localStorage.setItem(key, JSON.stringify(data));
-                resolve();
-            } catch (error) {
-                localStorage.removeItem(key);
-                reject(error);
-            }
-        });
-    }
-
     async function handleInputChange(id, newValue) {
 
         // First, compute the new categories array
@@ -76,8 +64,21 @@ function Allocation() {
     };
 
     const backClick = () => {
-        navigate(-1);
+        navigate('/Budget/Banking');
     }
+
+    const checkInputs = (event) => {
+        var sum = 0;
+        categories.forEach((value, index) => {
+            sum += Number(value.value);
+        });
+        if (sum < 100 || sum > 100) {
+            alert("Your selection doesn't add up to 100!");
+        } else {
+            handleSubmit(event);
+        }
+    }
+
 
     return (
         <>
@@ -86,10 +87,11 @@ function Allocation() {
             </p>
             <hr className="ahr"></hr>
             <div className='formControl'>
-                <form onSubmit={handleSubmit} className='form'>
+                <form onSubmit={checkInputs} className='form'>
                     {categories.map((category) => (
                         <div key={category.id}>
-                            <label classname='lStyle2'>
+                            {/* classname='lStyle2' */}
+                            <label className='lStyle'>
                                 {category.name}:
                                 <input
                                     type="number"
