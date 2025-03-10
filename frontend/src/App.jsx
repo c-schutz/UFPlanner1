@@ -34,10 +34,6 @@ function App() {
         </Route>
         <Route path='Account' element={<Account/>}>
         </Route>
-        <Route path='Account/Login' element={<Login/>}>
-        </Route>
-        <Route path='Account/Signup' element={<Signup/>}>
-        </Route>
         <Route path='Budget/Questionnaire' element={<Questionnaire/>}>
         </Route>
         <Route path='Budget/Banking' element={<Banking/>}>
