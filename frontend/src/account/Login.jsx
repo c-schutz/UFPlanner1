@@ -1,15 +1,19 @@
 import {React, useState} from "react";
 
-const Login = () => {
+const Login = ({ onStatusChange }) => {
     const[email, setEmail] = useState("");
-    const [passwotd, setPassword] = useState("");
+    const [password, setPassword] = useState("");
     const handeLogin = (e) => {
         e.preventDefault();
     }
+
+
     return (
-        <div>
-            <h2>Login</h2>
-        </div>
+        <>
+        <div>Login Feature</div>
+        <div><button onClick={() => onStatusChange('summary')}>Login</button></div>
+        <div><button onClick={() => onStatusChange('signup')}>Sign Up</button></div>
+        </>
     );
 };
 
