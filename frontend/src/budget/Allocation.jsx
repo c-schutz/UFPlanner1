@@ -5,43 +5,19 @@ import { motion, useAnimate } from "motion/react";
 import './bankingstyles.css';
 
 function Allocation() {
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const allocationCategories = cats;
-    //console.log(allocationCategories);
-
     const [categories, setCategories] = useState(() => {
-        if (localStorage.getItem('localAlloCats') == null) {
-            return cats;
-        } else {
-            return JSON.parse(localStorage.getItem('localAlloCats'));
-        }
+        const storedCats = localStorage.getItem('localAlloCats');
+        return storedCats ? JSON.parse(storedCats) : cats;
     });
 
-    async function handleInputChange(id, newValue) {
-
-        // First, compute the new categories array
+    const handleInputChange = (id, newValue) => {
         const newCategories = categories.map(category =>
             category.id === id ? { ...category, value: newValue } : category
         );
-
-        // Update state
         setCategories(newCategories);
-
-        // Define a function that returns a promise to handle localStorage asynchronously
-        const saveToLocalStorage = (key, data) => new Promise((resolve, reject) => {
-            try {
-                localStorage.setItem(key, JSON.stringify(data));
-                resolve();
-            } catch (error) {
-                console.error("Failed to save data to localStorage:", error);
-                localStorage.removeItem(key);
-                reject(error);
-            }
-        });
-
-        // Use the updated categories for saving to local storage
-        await saveToLocalStorage('localAlloCats', newCategories);
-    }
+    };
 
     const addCategory = () => {
         const categoryName = prompt("Enter the new category name:");
@@ -51,46 +27,52 @@ function Allocation() {
                 name: categoryName.trim(),
                 value: ''
             };
-            setCategories([...categories, newCategory]);
-            localStorage.setItem('localAlloCats', JSON.stringify(categories));
+            setCategories([...categories, newCategory]);  // Ensures real-time update in UI
+            localStorage.setItem('localAlloCats', JSON.stringify([...categories, newCategory]));
         }
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log(categories);
-        localStorage.clear(); //clears after form is submitted, to change later
+    const handleSubmit = () => {
+        console.log('Form Submission:', categories);
+        localStorage.clear();  // Consider changing when deploying actual app logic instead of clearing everything
         navigate('/Budget');
     };
 
-    const backClick = () => {
-        navigate('/Budget/Banking');
-    }
-
-    const checkInputs = (event) => {
-        var sum = 0;
-        categories.forEach((value, index) => {
-            sum += Number(value.value);
+    const fetchData = () => {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve("Data Loaded");
+            }, 5000);
         });
-        if (sum < 100 || sum > 100) {
+    };
+
+    const checkInputs = async (event) => {
+        event.preventDefault();
+        var sum = categories.reduce((sum, category) => sum + Number(category.value), 0);
+        if (sum !== 100) {
             alert("Your selection doesn't add up to 100!");
         } else {
-            handleSubmit(event);
+            setLoading(true);
+            try {
+                const data = await fetchData();
+                console.log('Pseudo data loaded:', data);
+                handleSubmit();
+            } catch (error) {
+                console.error('Data loading failed:', error);
+                alert("Failed to load data.");
+            }
+            setLoading(false);
         }
-    }
-
+    };
 
     return (
         <>
-            <p>
-                Enter (percentage) allocation amounts.
-            </p>
+            <p>Enter (percentage) allocation amounts.</p>
             <hr className="ahr"></hr>
             <div className='formControl'>
                 <form onSubmit={checkInputs} className='form'>
                     {categories.map((category) => (
                         <div key={category.id}>
-                            {/* classname='lStyle2' */}
                             <label className='lStyle'>
                                 {category.name}:
                                 <input
@@ -102,9 +84,9 @@ function Allocation() {
                             <br />
                         </div>
                     ))}
-                    <div className='c'>
+                    <div className='co'>
                         <div className="buttonContainer">
-                            <motion.button type="button" onClick={backClick} className='buttons'
+                            <motion.button type="button" onClick={() => navigate('/Budget/Banking')} className='buttons'
                                 whileHover={{ scale: 1.1 }}>
                                 Back
                             </motion.button>
@@ -119,6 +101,9 @@ function Allocation() {
                         </div>
                     </div>
                 </form>
+            </div>
+            <div className='loading'>
+                {loading && (<object className='loadingCircles' type="image/svg+xml" data="/circleloadingsm.svg">Your browser does not support SVG</object>)}
             </div>
         </>
     );

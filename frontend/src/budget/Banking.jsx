@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import bankingcats from './bankingcats';
 import { motion, useAnimate } from "motion/react";
@@ -53,6 +53,7 @@ function Banking() {
         if (sum == 0) {
             alert("No banking data entered.");
         } else {
+
             handleSubmit(event);
         }
     }
