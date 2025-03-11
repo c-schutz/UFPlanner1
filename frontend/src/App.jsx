@@ -7,8 +7,6 @@ import About from "./about/About";
 import Budget from "./budget/Budget";
 import Account from "./account/Account";
 import Navbar from './components/Navbar';
-import Login from './account/Login'; 
-import Signup from "./account/Signup"
 import Questionnaire from "./budget/Questionnaire";
 import Banking from "./budget/Banking";
 import Allocation from "./budget/Allocation";
