@@ -5,9 +5,19 @@ import { motion, useAnimate } from "motion/react";
 import './bankingstyles.css';
 
 function Allocation() {
+
+    //for testing
+    function timeout(delay) {
+        return new Promise(res => setTimeout(res, delay));
+    }
+
+    const [suggest, setSuggest] = useState(false);
+    const [suggestion, setSuggestion] = useState({});
+
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const [data, setData] = useState(null); // State to store response data
+
     const [categories, setCategories] = useState(() => {
         const storedCats = localStorage.getItem('localAlloCats');
         return storedCats ? JSON.parse(storedCats) : cats;
@@ -48,11 +58,11 @@ function Allocation() {
                 },
                 body: JSON.stringify(dataToSend)
             });
-            
+
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            
+
             const responseData = await response.json();
             setData(responseData);  // Store the entire response data
             return responseData;  // Return the data for immediate use
@@ -70,18 +80,22 @@ function Allocation() {
         } else {
             setLoading(true);
             try {
-                const dataToSend = { 
+                const dataToSend = {
                     categories: categories,  // Send the actual categories data
                     additionalInfo: "User allocation data"
                 };
-                
+
                 const responseData = await fetchData(dataToSend);
                 console.log("Server response:", responseData);
-                
-                if (responseData && responseData.message) {
-                    console.log("Message from server:", responseData.message);
+
+                await timeout(1000);//example delay from server
+
+                if(true){//check active suggestions
+                    setSuggest(true);
+                    setSuggestion({test: 1});
                 }
-                
+
+                await timeout(10000);
                 handleSubmit();
             } catch (error) {
                 console.error('Data loading failed:', error);
@@ -95,38 +109,41 @@ function Allocation() {
         <>
             <p>Enter (percentage) allocation amounts.</p>
             <hr className="ahr"></hr>
-            <div className='formControl'>
-                <form onSubmit={checkInputs} className='form'>
-                    {categories.map((category) => (
-                        <div key={category.id}>
-                            <label className='lStyle'>
-                                {category.name}:
-                                <input
-                                    type="number"
-                                    value={category.value}
-                                    onChange={(e) => handleInputChange(category.id, e.target.value)}
-                                />
-                            </label>
-                            <br />
+            <div className='suggestions'>
+                <div className='formControl'>
+                    <form onSubmit={checkInputs} className='form'>
+                        {categories.map((category) => (
+                            <div key={category.id}>
+                                <label className='lStyle'>
+                                    {category.name}:
+                                    <input
+                                        type="number"
+                                        value={category.value}
+                                        onChange={(e) => handleInputChange(category.id, e.target.value)}
+                                    />
+                                </label>
+                                <br />
+                            </div>
+                        ))}
+                        <div className='co'>
+                            <div className="buttonContainer">
+                                <motion.button type="button" onClick={() => navigate('/Budget/Banking')} className='buttons'
+                                    whileHover={{ scale: 1.1 }}>
+                                    Back
+                                </motion.button>
+                                <motion.button type="button" onClick={addCategory} className='buttons'
+                                    whileHover={{ scale: 1.1 }}>
+                                    Add Category
+                                </motion.button>
+                                <motion.button type="submit" className='buttons'
+                                    whileHover={{ scale: 1.1 }}>
+                                    Submit Data
+                                </motion.button>
+                            </div>
                         </div>
-                    ))}
-                    <div className='co'>
-                        <div className="buttonContainer">
-                            <motion.button type="button" onClick={() => navigate('/Budget/Banking')} className='buttons'
-                                whileHover={{ scale: 1.1 }}>
-                                Back
-                            </motion.button>
-                            <motion.button type="button" onClick={addCategory} className='buttons'
-                                whileHover={{ scale: 1.1 }}>
-                                Add Category
-                            </motion.button>
-                            <motion.button type="submit" className='buttons'
-                                whileHover={{ scale: 1.1 }}>
-                                Submit Data
-                            </motion.button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
+                <div className={suggest ? 'suggest' : 'remove'}><p>{JSON.stringify(suggestion.test)}</p></div>
             </div>
             <div className='loading'>
                 {loading && (<object className='loadingCircles' type="image/svg+xml" data="/circleloadingsm.svg">Your browser does not support SVG</object>)}

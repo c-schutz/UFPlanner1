@@ -2,6 +2,7 @@
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -41,10 +42,25 @@
     margin-bottom: 8vh;
 }
 
-.loading{
+.loading {
     display: flex;
     justify-content: right;
     margin-right: 23.5vw;
+}
+
+.suggestions {
+    display: flex;
+    justify-content: center;
+    gap: 20vw;
+}
+
+.suggest{
+    margin-top: 7vh;
+}
+
+.remove{
+    position: absolute;
+    display: hidden;
 }
 
 /* buttons, c, buttonContainer taken from questionnaire */
