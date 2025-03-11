@@ -10,7 +10,6 @@ const Account = () => {
         setUserStatus(status);
     }
     const renderView = () => {
-        console.log(`Rendering view: ${UserStatus}`); // Debugging line
         switch (UserStatus) {
           case 'login':
             return <Login onStatusChange = {handleStatus} />;
