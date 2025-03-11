@@ -7,6 +7,7 @@ import './bankingstyles.css';
 function Allocation() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const [data, setData] = useState(null); // State to store response data
     const [categories, setCategories] = useState(() => {
         const storedCats = localStorage.getItem('localAlloCats');
         return storedCats ? JSON.parse(storedCats) : cats;
@@ -33,35 +34,60 @@ function Allocation() {
     };
 
     const handleSubmit = () => {
-        console.log('Form Submission:', categories);
         localStorage.clear();  // Consider changing when deploying actual app logic instead of clearing everything
         navigate('/Budget');
     };
 
-    const fetchData = () => {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve("Data Loaded");
-            }, 5000);
-        });
+    // Modified fetchData function to use POST and handle dataToSend properly
+    const fetchData = async (dataToSend) => {
+        try {
+            const response = await fetch('http://localhost:3001/Budget/Allocation', {
+                method: 'POST',  // Using POST as defined in your backend
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dataToSend)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            
+            const responseData = await response.json();
+            setData(responseData);  // Store the entire response data
+            return responseData;  // Return the data for immediate use
+        } catch (error) {
+            console.error('Fetch error:', error);
+            throw error;
+        }
     };
 
     const checkInputs = async (event) => {
         event.preventDefault();
-        var sum = categories.reduce((sum, category) => sum + Number(category.value), 0);
-        if (sum !== 100) {
+        const sum = categories.reduce((sum, category) => sum + Number(category.value), 0);
+        if (sum != 100) {
             alert("Your selection doesn't add up to 100!");
         } else {
             setLoading(true);
             try {
-                const data = await fetchData();
-                console.log('Pseudo data loaded:', data);
+                const dataToSend = { 
+                    categories: categories,  // Send the actual categories data
+                    additionalInfo: "User allocation data"
+                };
+                
+                const responseData = await fetchData(dataToSend);
+                console.log("Server response:", responseData);
+                
+                if (responseData && responseData.message) {
+                    console.log("Message from server:", responseData.message);
+                }
+                
                 handleSubmit();
             } catch (error) {
                 console.error('Data loading failed:', error);
-                alert("Failed to load data.");
+            } finally {
+                setLoading(false);
             }
-            setLoading(false);
         }
     };
 

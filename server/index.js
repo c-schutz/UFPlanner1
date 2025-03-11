@@ -1,14 +1,54 @@
 import express from "express";
 import cors from "cors"; // Import the CORS package
+import { Testing } from './datacollect.js';
 import pool from "./database.js"
 const PORT = process.env.PORT || 3001;
 const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json()); // Allows Express to parse JSON bodies
+app.use(express.json());
 app.get("/", (req, res) => {
   res.json({ message: "Hello from server!" });
+});
+
+// Add a GET endpoint to match the frontend request
+app.get('/Budget/Allocation', (req, res) => {
+  try {
+    let r = Testing();
+    console.log("GET request to /Budget/Allocation:", r);
+    const data = {
+      message: 'This is data from the GET endpoint',
+      name: 'John Doe',
+      age: 30
+    };
+    res.json(data);
+  } catch (error) {
+    console.error('Error processing GET request:', error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Original POST endpoint
+app.post('/Budget/Allocation', (req, res) => {
+  try {
+    const requestData = req.body;
+    console.log("Received data:", requestData);
+    
+    let r = Testing();
+    
+    const responseData = {
+      message: 'Data received successfully',
+      name: 'John Doe',
+      age: 30,
+      receivedData: requestData, // Echo back the received data
+      extra: JSON.stringify(r)
+    };
+    res.json(responseData);
+  } catch (error) {
+    console.error('Error processing POST request:', error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 // Login route
 app.post("/login", async (req, res) => {
