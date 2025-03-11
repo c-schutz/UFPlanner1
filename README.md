@@ -104,3 +104,4 @@ app.listen(PORT, () => {
 cd into server on one and run "npm start"
 then cd into frontend and run "npm run dev" 
 open the localhost to see the website which should update on saves
+lauren 
