@@ -8,28 +8,29 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+
 app.get("/", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
 
 // Add a GET endpoint to match the frontend request
-app.get('/Budget/Allocation', (req, res) => {
-  try {
-    let r = Testing();
-    console.log("GET request to /Budget/Allocation:", r);
-    const data = {
-      message: 'This is data from the GET endpoint',
-      name: 'John Doe',
-      age: 30
-    };
-    res.json(data);
-  } catch (error) {
-    console.error('Error processing GET request:', error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+// app.get('/Budget/Allocation', (req, res) => {
+//   try {
+//     let r = Testing();
+//     console.log("GET request to /Budget/Allocation:", r);
+//     const data = {
+//       message: 'This is data from the GET endpoint',
+//       name: 'John Doe',
+//       age: 30
+//     };
+//     res.json(data);
+//   } catch (error) {
+//     console.error('Error processing GET request:', error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
 
-// Original POST endpoint
+// Original POST endpoint POST is for sending data since it doesn't appear on the url
 app.post('/Budget/Allocation', (req, res) => {
   try {
     const requestData = req.body;
@@ -50,6 +51,8 @@ app.post('/Budget/Allocation', (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
 // Login route
 app.post("/login", async (req, res) => {
   console.log("Login request received:", req.body);  // Log request data
