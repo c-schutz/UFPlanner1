@@ -6,22 +6,22 @@ function About() {
         <>
             <Navbar />
             <title>
-                UFPlanner About
+                UFinancial About
             </title>
-            <h1> What is UFplanner? </h1>
+            <h1> What is UFinancial? </h1>
             <p>
-                UFplanner is a financial planner that provides resources for creating and visualizing adaptive budgets
+                UFinancial is a financial planner that provides resources for creating and visualizing adaptive budgets
                 specifically aimed toward college students.
             </p>
-            <h1> Why UFplanner? </h1>
+            <h1> Why UFinancial? </h1>
             <p>
                 Each and every student comes from a different financial background which can make it difficult to create
                 an "end all be all" budget.
-                UFplanner aims to make the budget creation process easier for students by providing budgeting
+                UFinancial aims to make the budget creation process easier for students by providing budgeting
                 suggestions and visualizations while suggesting sensible saving/spending practices.
 
             </p>
-            <h1> How was the idea for UFplanner formed? </h1>
+            <h1> How was the idea for UFinancial formed? </h1>
             <p>
                 Each member of our team has faced various challenges regarding how to
                 manage our finances.
