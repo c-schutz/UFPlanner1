@@ -86,6 +86,36 @@ app.post("/login", async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 });
+app.post("/signup", async (req, res) => {
+  console.log("Signup request received:", req.body);  // Log request data
+
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.status(400).json({ message: "Email and password are required" });
+    }
+
+    try {
+      // Query to check if the email exists
+      const [rows] = await pool.query("SELECT * FROM users WHERE email = ?", [email]);
+  
+      if (rows.length > 0) {
+          return res.status(400).json({ message: "Email already exists" });
+      }
+  
+      // Insert new user into the database
+      const result = await pool.query("INSERT INTO users (email, password) VALUES (?, ?)", [email, password]);
+  
+      if (result[0].affectedRows > 0) {
+          return res.status(201).json({ message: "Account created successfully" });
+      } else {
+          return res.status(500).json({ message: "Failed to create account" });
+      }
+  } catch (error) {
+      console.error("Database error:", error);
+      res.status(500).json({ message: "Internal server error" });
+  }
+});
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
