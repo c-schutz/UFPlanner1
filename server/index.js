@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors"; // Import the CORS package
-import { Testing } from './datacollect.js';
+import { Visualize } from './datacollect.js';
 import pool from "./database.js"
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -8,6 +8,16 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+const tempBudgetInput = {
+  categories: {
+      needs: 50,
+      wants: 30,
+      savings: 20
+  },
+  userID: 1,
+  budgetID: 1
+}
 
 app.get("/", (req, res) => {
   res.json({ message: "Hello from server!" });
@@ -34,17 +44,18 @@ app.get("/", (req, res) => {
 app.post('/Budget/Allocation', (req, res) => {
   try {
     const requestData = req.body;
-    console.log("Received data:", requestData);
+    // console.log("Received data:", requestData);
     
-    let r = Testing();
-    
+    const pieChart = Visualize(tempBudgetInput);
+
     const responseData = {
       message: 'Data received successfully',
       name: 'John Doe',
       age: 30,
       receivedData: requestData, // Echo back the received data
-      extra: JSON.stringify(r)
+      pie: pieChart
     };
+   
     res.json(responseData);
   } catch (error) {
     console.error('Error processing POST request:', error);

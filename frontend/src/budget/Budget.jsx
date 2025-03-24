@@ -2,15 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { motion, useAnimate } from "motion/react";
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import { useVData } from '../Vcontext';
 
 import './bstyles.css';
 
 function Budget() {
     //hook declaration
+    const { vData, setV } = useVData();//get from context
     const [scope, animate] = useAnimate()
     const [delay, setDelay] = useState(false);
     const navigate = useNavigate();
 
+    useEffect(() =>{
+        console.log("vData changed");
+        console.log(vData);
+    },[vData]);
     async function myAnimation() {
         await animate("button", { y: -5 }, { duration: .2 });
         await animate("button", { y: 5 }, { duration: .2 });
