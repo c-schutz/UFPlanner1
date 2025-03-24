@@ -13,6 +13,7 @@ import Allocation from "./budget/Allocation";
 
 function App() {
   const [data, setData] = useState(null);
+  const [userStatus, setUserStatus] = useState("login");
 
   // useEffect(() => {
   //   fetch("http://localhost:3001/")
@@ -30,7 +31,7 @@ function App() {
         </Route>
         <Route path='Budget' element={<Budget/>}>
         </Route>
-        <Route path='Account' element={<Account/>}>
+        <Route path='Account' element={<Account userStatus = {userStatus} setUserStatus = {setUserStatus}/>}>
         </Route>
         <Route path='Budget/Questionnaire' element={<Questionnaire/>}>
         </Route>
