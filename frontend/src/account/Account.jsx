@@ -4,21 +4,27 @@ import Signup from "./Signup"
 import Navbar from '../components/Navbar';
 import Summary from './Summary';
 
-const Account = () => { 
-    const [UserStatus, setUserStatus] = useState("login");
+const Account = ({userStatus, setUserStatus}) => { 
+  //This is the state of the site that tell it to post the login, signup, or account summary.
     const handleStatus = (status) => {
         setUserStatus(status);
-    }
+    }  
+    //uses the UserStatus to render which page should be viewed.
     const renderView = () => {
-        switch (UserStatus) {
+      console.log(userStatus)
+        switch (userStatus) {
           case 'login':
-            return <Login onStatusChange = {handleStatus} />;
+            return <Login handleStatus = {handleStatus} />;
           case 'signup':
-            return <Signup onStatusChange = {handleStatus}/>;
+            return <Signup handleStatus = {handleStatus}/>;
           case 'summary':
-            return <Summary onStatusChange = {handleStatus}/>;
+            return <Summary handleStatus = {handleStatus}/>;
+          default :
+            return <h2> Oh no</h2>;
         }
-      };
+
+      }; 
+      //Returns the nav bar with the renderview function that shows the right
   return (
     <>
       <Navbar />

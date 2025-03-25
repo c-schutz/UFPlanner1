@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import cats from './alloccats';
 import { useNavigate } from 'react-router-dom';
 import { motion, useAnimate } from "motion/react";
+import { useVData } from '../Vcontext';
 import './bankingstyles.css';
 
 function Allocation() {
+    const { vData, setV } = useVData();//get from context
 
     //for testing
     function timeout(delay) {
@@ -86,6 +88,8 @@ function Allocation() {
                 };
 
                 const responseData = await fetchData(dataToSend);
+                //get data that we send to App.jsx to then send Budget.jsx
+                setV(responseData);
                 console.log("Server response:", responseData);
 
                 await timeout(1000);//example delay from server
