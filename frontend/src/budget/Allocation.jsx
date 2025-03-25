@@ -6,6 +6,7 @@ import { useVData } from '../Vcontext';
 import './bankingstyles.css';
 
 function Allocation() {
+    const [submitting, setSubmitting] = useState(false);
     const { vData, setV } = useVData();//get from context
 
     //for testing
@@ -48,6 +49,8 @@ function Allocation() {
     const handleSubmit = () => {
         localStorage.clear();  // Consider changing when deploying actual app logic instead of clearing everything
         navigate('/Budget');
+        //buttons can activate again after navigation occurs
+        setSubmitting(false);
     };
 
     // Modified fetchData function to use POST and handle dataToSend properly
@@ -75,6 +78,8 @@ function Allocation() {
     };
 
     const checkInputs = async (event) => {
+        //disable buttons because form is being submitted
+        setSubmitting(true);
         event.preventDefault();
         const sum = categories.reduce((sum, category) => sum + Number(category.value), 0);
         if (sum != 100) {
@@ -92,14 +97,13 @@ function Allocation() {
                 setV(responseData);
                 console.log("Server response:", responseData);
 
-                await timeout(1000);//example delay from server
+                await timeout(2000);//example delay from server
 
                 if(true){//check active suggestions
                     setSuggest(true);
                     setSuggestion({test: 1});
                 }
 
-                await timeout(10000);
                 handleSubmit();
             } catch (error) {
                 console.error('Data loading failed:', error);
@@ -131,15 +135,15 @@ function Allocation() {
                         ))}
                         <div className='co'>
                             <div className="buttonContainer">
-                                <motion.button type="button" onClick={() => navigate('/Budget/Banking')} className='buttons'
+                                <motion.button type="button" onClick={() => navigate('/Budget/Banking')} className='buttons' disabled={submitting}
                                     whileHover={{ scale: 1.1 }}>
                                     Back
                                 </motion.button>
-                                <motion.button type="button" onClick={addCategory} className='buttons'
+                                <motion.button type="button" onClick={addCategory} className='buttons' disabled={submitting}
                                     whileHover={{ scale: 1.1 }}>
                                     Add Category
                                 </motion.button>
-                                <motion.button type="submit" className='buttons'
+                                <motion.button type="submit" className='buttons' disabled={submitting}
                                     whileHover={{ scale: 1.1 }}>
                                     Submit Data
                                 </motion.button>
