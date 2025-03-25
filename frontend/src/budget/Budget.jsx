@@ -3,7 +3,7 @@ import { motion, useAnimate } from "motion/react";
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useVData } from '../Vcontext';
-
+import { BudgetContainer } from '../components/BudgetContainer';
 import './bstyles.css';
 
 function Budget() {
@@ -49,6 +49,8 @@ function Budget() {
                     New Budget
                 </motion.button>
             </div>
+            {/* pass in the vData to render in each budget */}
+            <BudgetContainer svgData={vData}/>
         </>
     );
 }
