@@ -1,6 +1,6 @@
 import {React, useState} from "react";
 
-const Login = ({ onStatusChange }) => {
+const Login = ({ handleStatus }) => {
     const[email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -28,7 +28,7 @@ const Login = ({ onStatusChange }) => {
             }
 
             console.log("Login successful:", data);
-            onStatusChange("summary"); // Redirect to another page
+            handleStatus("summary"); // Redirect to another page
 
         } catch (err) {
             console.error("Error logging in:", err);
@@ -61,7 +61,7 @@ const Login = ({ onStatusChange }) => {
           <button type="submit">Login</button>
         </div>
       </form>
-      <div><button onClick={() => onStatusChange('signup')}>Sign Up</button></div>
+      <div><button onClick={() => handleStatus('signup')}>Sign Up</button></div>
       {error && <p style={{ color: "red" }}>{error}</p>}
 
     </>

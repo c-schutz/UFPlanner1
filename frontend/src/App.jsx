@@ -6,22 +6,15 @@ import { Routes, Route } from 'react-router-dom';
 import About from "./about/About";
 import Budget from "./budget/Budget";
 import Account from "./account/Account";
-import Navbar from './components/Navbar';
 import Questionnaire from "./budget/Questionnaire";
 import Banking from "./budget/Banking";
 import Allocation from "./budget/Allocation";
-import { createContext } from 'react';
 import { VDataProvider } from './Vcontext'; // Import the provider
 
 function App() {
   const [data, setData] = useState(null);
+  const [userStatus, setUserStatus] = useState("login");
 
-  const [vData, setVData] = useState(null);
-  const vContext = createContext(null);
-
-  const setV = (v) => {//used to set the visualization data that is contained in the context provider
-    setVData(v);
-  }
   // useEffect(() => {
   //   fetch("http://localhost:3001/")
   //     .then((res) => res.json())
@@ -46,7 +39,7 @@ function App() {
           </Route>
           <Route path='Budget/Allocation' element={<Allocation />}>
           </Route>
-          <Route path='Account' element={<Account />}>
+          <Route path='Account' element={<Account userStatus = {userStatus} setUserStatus = {setUserStatus}/>}>
           </Route>
         </Routes>
       </VDataProvider>

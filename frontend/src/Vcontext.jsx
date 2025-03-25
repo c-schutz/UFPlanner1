@@ -6,7 +6,7 @@ const VDataContext = createContext();
 // Export the provider as its own component
 export const VDataProvider = ({ children }) => {
     const [vData, setVData] = useState(null);
-
+    
     const setV = (v) => {
         setVData(v);
     };

@@ -1,41 +1,65 @@
 import {React, useState} from "react";
 
-const Signup = ({onStatusChange}) => {
+const Signup = ({handleStatus}) => {
     const[email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    function checkInputs(){
-        console.log("Email: " , email);
-        console.log("password: " , password);
-
-    }
-    return (
-        <>
-        <div>Sign up Feature</div>
-        <div> 
-        <input
-          value={email}
-          onChange={e => {
-            setEmail(e.target.value) 
-            checkInputs()
-            }
+    const [error, setError] = useState("");
+        
+        const handleSubmit = async (e) => {
+          e.preventDefault(); // Prevent page refresh
+  
+          try {
+              const response = await fetch("http://localhost:3001/signup", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ email, password }),
+              });
+  
+              const data = await response.json();
+  
+              if (!response.ok) {
+                  setError(data.message);
+                  return;
+              }
+  
+              console.log("Signup successful:", data);
+              handleStatus("login"); // Redirect to another page
+  
+          } catch (err) {
+              console.error("Error logging in:", err);
+              setError("An error occurred. Please try again.");
           }
-        />
+        };
+
+
+    return (
+      <>
+      <div>Signup Feature</div>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
         <div>
-        <input
-          value={password}
-          onChange={e => {
-            setPassword(e.target.value)
-            checkInputs()
-            }
-        }
-        />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
         <div>
-        <button onClick={() => onStatusChange('summary')}>Sign Up</button>
+          <button type="submit">Signup</button>
         </div>
-        <div><button onClick={() => onStatusChange('login')}>Back to Login</button></div>
-        </>
+      </form>
+      <div><button onClick={() => handleStatus('login')}>Login</button></div>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
+    </>
         
     );
 };
