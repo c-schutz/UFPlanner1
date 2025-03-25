@@ -1,10 +1,10 @@
 import {React, useState} from "react";
 
-const Summary = ({onStatusChange}) => {
+const Summary = ({handleStatus}) => {
     return (
         <>
         <div>Account Summary</div>
-        <div><button onClick={() => onStatusChange('login')}>Signout</button></div>
+        <div><button onClick={() => handleStatus('login')}>Signout</button></div>
         </>
     );
 };
