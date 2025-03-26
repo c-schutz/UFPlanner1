@@ -44,16 +44,16 @@ app.get("/", (req, res) => {
 app.post('/Budget/Allocation', (req, res) => {
   try {
     const requestData = req.body;
-    // console.log("Received data:", requestData);
+    console.log("Received data:", requestData);
     
-    const pieChart = Visualize(tempBudgetInput);
+    const svgArray = Visualize(requestData.data);
 
     const responseData = {
       message: 'Data received successfully',
       name: 'John Doe',
       age: 30,
       receivedData: requestData, // Echo back the received data
-      pie: pieChart
+      svgs: svgArray
     };
    
     res.json(responseData);

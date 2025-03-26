@@ -8,6 +8,7 @@ import './bankingstyles.css';
 function Allocation() {
     const [submitting, setSubmitting] = useState(false);
     const { vData, setV } = useVData();//get from context
+    const { logged, setLogged } = useVData();
 
     //for testing
     function timeout(delay) {
@@ -22,7 +23,7 @@ function Allocation() {
     const [data, setData] = useState(null); // State to store response data
 
     const [categories, setCategories] = useState(() => {
-        const storedCats = localStorage.getItem('localAlloCats');
+        const storedCats = sessionStorage.getItem('localAlloCats');
         return storedCats ? JSON.parse(storedCats) : cats;
     });
 
@@ -42,26 +43,36 @@ function Allocation() {
                 value: ''
             };
             setCategories([...categories, newCategory]);  // Ensures real-time update in UI
-            localStorage.setItem('localAlloCats', JSON.stringify([...categories, newCategory]));
+            sessionStorage.setItem('localAlloCats', JSON.stringify([...categories, newCategory]));
         }
     };
 
     const handleSubmit = () => {
-        localStorage.clear();  // Consider changing when deploying actual app logic instead of clearing everything
+        //sessionStorage.clear(); Consider changing when deploying actual app logic instead of clearing everything
         navigate('/Budget');
         //buttons can activate again after navigation occurs
         setSubmitting(false);
     };
+    //helper used to check if something is in JSON format or not
+    function isJson(str) {
+        try {
+            JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    }
 
     // Modified fetchData function to use POST and handle dataToSend properly
     const fetchData = async (dataToSend) => {
+        //console.log(dataToSend);
         try {
             const response = await fetch('http://localhost:3001/Budget/Allocation', {
                 method: 'POST',  // Using POST as defined in your backend
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(dataToSend)
+                body: dataToSend
             });
 
             if (!response.ok) {
@@ -78,13 +89,84 @@ function Allocation() {
     };
 
     const checkInputs = async (event) => {
-        //disable buttons because form is being submitted
-        setSubmitting(true);
         event.preventDefault();
         const sum = categories.reduce((sum, category) => sum + Number(category.value), 0);
         if (sum != 100) {
             alert("Your selection doesn't add up to 100!");
         } else {
+            //disable buttons because form is being submitted
+            setSubmitting(true);
+            sessionStorage.setItem('currentadata', JSON.stringify(categories))
+
+            //change functionality based upon whether user is logged or not
+            if (logged) {
+                console.log("User is logged in send to backend");
+
+            } else {
+                //create fake budgetID/update if user isn't logged in
+                let bID = JSON.parse(sessionStorage.getItem('currentBID'));
+                if (bID == null) { //this is the first budget they are creating
+                    sessionStorage.setItem('currentBID', 1);
+                    bID = 1;
+                } else {
+                    sessionStorage.setItem('currentBID', parseInt(bID, 10) + 1);
+                }
+
+
+                console.log("User isn't logged in concatenate in sessionStorage");
+                let qData = JSON.parse(sessionStorage.getItem('currentqdata'));
+                let bData = JSON.parse(sessionStorage.getItem('currentbdata'));
+                let aData = JSON.parse(sessionStorage.getItem('currentadata'));
+
+                let fullData = {
+                    budgetID: bID,
+                    questionnaire: qData,
+                    banking: bData,
+                    allocation: aData
+                };
+                let name = 'budgets';//name of where all the budgets will be stored
+
+                //check if there are budgets already and either add or create the first
+                if (sessionStorage.getItem(name) == null) { //first item
+                    sessionStorage.setItem(name, JSON.stringify([fullData]));
+                } else { //add to the budgets
+                    let budgets = JSON.parse(sessionStorage.getItem(name));
+                    budgets.push(fullData);
+                    sessionStorage.setItem(name, JSON.stringify(budgets));
+                }
+
+                setLoading(true);
+                try {
+                    const data = { //send the full budget data and tell backend that user isn't logged
+                        data: JSON.parse(sessionStorage.getItem(name)), //already in JSON.stringify() format
+                        isLoggedIn: false
+                    };
+                    const dataToSend = JSON.stringify(data);
+                    // if(isJson(dataToSend)){
+                    //     console.log("Should work");
+                    // }
+
+                    const responseData = await fetchData(dataToSend);
+                    //get data that we send to App.jsx to then send Budget.jsx
+                    // setV(responseData);
+                    // console.log("Server response:", responseData);
+                    sessionStorage.setItem('svgData', JSON.stringify(responseData.svgs));
+
+                    await timeout(2000);//example delay from server
+
+                    if (true) {//check active suggestions
+                        setSuggest(true);
+                        setSuggestion({ test: 1 });
+                    }
+
+                    handleSubmit();
+                } catch (error) {
+                    console.error('Data loading failed:', error);
+                } finally {
+                    setLoading(false);
+                }
+            }
+            /*
             setLoading(true);
             try {
                 const dataToSend = {
@@ -99,9 +181,9 @@ function Allocation() {
 
                 await timeout(2000);//example delay from server
 
-                if(true){//check active suggestions
+                if (true) {//check active suggestions
                     setSuggest(true);
-                    setSuggestion({test: 1});
+                    setSuggestion({ test: 1 });
                 }
 
                 handleSubmit();
@@ -110,6 +192,7 @@ function Allocation() {
             } finally {
                 setLoading(false);
             }
+            */
         }
     };
 

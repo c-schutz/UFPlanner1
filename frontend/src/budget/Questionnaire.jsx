@@ -3,11 +3,14 @@ import questions from './questions';
 import { useNavigate } from 'react-router-dom';
 import { motion, useAnimate } from "motion/react";
 import './qstyles.css';
+import { useVData } from '../Vcontext';
 
 function Questionnaire() {
+    const { logged, setLogged } = useVData();
+    //console.log(logged); test if log is working
 
     const [answers, setAnswers] = useState(() => {
-        const savedAnswers = localStorage.getItem('answers');
+        const savedAnswers = sessionStorage.getItem('answers');
         if (savedAnswers) {
             return JSON.parse(savedAnswers);
         } else {
@@ -31,12 +34,12 @@ function Questionnaire() {
     const handleSubmit = (event) => {
         event.preventDefault();
         //console.log('Submitted Answers:', answers);
-        localStorage.setItem('answers', JSON.stringify(answers));
+        sessionStorage.setItem('currentqdata', JSON.stringify(answers));
         navigate('/Budget/Banking');
     };
 
     const backClick = () => {
-        localStorage.clear();
+        //sessionStorage.clear();
         navigate('/Budget');
     }
 

@@ -8,15 +8,37 @@ import './bstyles.css';
 
 function Budget() {
     //hook declaration
-    const { vData, setV } = useVData();//get from context
+    const { logged, setLogged } = useVData();
     const [scope, animate] = useAnimate()
     const [delay, setDelay] = useState(false);
+    const [svgData, setSVGData] = useState([]);
     const navigate = useNavigate();
 
-    useEffect(() =>{
-        console.log("vData changed");
-        console.log(vData);
-    },[vData]);
+    useEffect(() => {
+        if (logged) {
+            // Fetch data from DB
+        } else {
+            const s = sessionStorage.getItem('svgData');
+            if (s) {
+                try {
+                    const parsed = JSON.parse(s);
+                    if (Array.isArray(parsed)) {
+                        setSVGData(parsed);
+                    } else {
+                        console.error("Data in sessionStorage is not an array:", parsed);
+                        setSVGData([]); // Fallback to empty array
+                    }
+                } catch (error) {
+                    console.error("Error parsing svgData from sessionStorage:", error);
+                    setSVGData([]); // Fallback to empty array on parse error
+                }
+            } else {
+                console.log("No svgData in sessionStorage");
+                setSVGData([]);
+            }
+        }
+    }, [logged]);
+
     async function myAnimation() {
         await animate("button", { y: -5 }, { duration: .2 });
         await animate("button", { y: 5 }, { duration: .2 });
@@ -49,8 +71,10 @@ function Budget() {
                     New Budget
                 </motion.button>
             </div>
-            {/* pass in the vData to render in each budget */}
-            <BudgetContainer svgData={vData}/>
+            {/* pass in the svgData to render in each budget */}
+            {Array.isArray(svgData) && svgData.map((svg, index) => (
+                !logged && svg ? <BudgetContainer key={index} svgData={svg}/> : null
+            ))}
         </>
     );
 }

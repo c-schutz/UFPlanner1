@@ -1,10 +1,17 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
+import { useVData } from "../Vcontext";
 
-const Summary = ({handleStatus}) => {
+const Summary = ({ handleStatus }) => {
+    const { logged, setLogged } = useVData();
+    const signout = () => {
+        handleStatus('login');
+        setLogged(false);
+    }
+
     return (
         <>
-        <div>Account Summary</div>
-        <div><button onClick={() => handleStatus('login')}>Signout</button></div>
+            <div>Account Summary</div>
+            <div><button onClick={signout}>Signout</button></div>
         </>
     );
 };
