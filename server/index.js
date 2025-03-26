@@ -148,6 +148,34 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+
+app.post("/api/budget-data", async (req, res) => {
+  const userID = parseInt(req.body.userID, 10); // Convert userID from string to integer
+  if (!userID) {
+    return res.status(400).json({ error: "Invalid or no User ID provided" });
+  }
+
+  try {
+    // Fetch the budget data associated with the userID
+    const [results] = await pool.query('SELECT data FROM budgets WHERE userID = ?', [userID]);
+    if (results.length === 0) {
+      return res.status(404).json({ error: "No budget data found for the given user ID" });
+    }
+    
+    const budgetData = results[0].data;
+
+    // Process the data with the Visualize function
+    // Assuming Visualize function accepts budget data and returns the visualized data
+    const visualizedData = Visualize(budgetData);
+
+    // Return the visualized data as the response
+    res.json({ visualizedData: visualizedData });
+  } catch (error) {
+    console.error("Error processing the request:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });

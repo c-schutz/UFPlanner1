@@ -16,7 +16,32 @@ function Budget() {
 
     useEffect(() => {
         if (logged) {
-            // Fetch data from DB
+            async function fetchData() {
+                try {
+                    const userData = JSON.stringify({
+                        userID: sessionStorage.getItem('userID')
+                    });
+
+                    const response = await fetch("http://localhost:3001/api/budget-data", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: userData
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Response status: ${response.status}`);
+                    }
+
+                    const rData = await response.json();
+                    setSVGData(rData.visualizedData);
+                    console.log("The visualized svg data from the db is ", rData.visualizedData);
+                } catch (error) {
+                    console.error(error.message);
+                }
+            }
+            fetchData();
         } else {
             const s = sessionStorage.getItem('svgData');
             if (s) {
@@ -73,7 +98,7 @@ function Budget() {
             </div>
             {/* pass in the svgData to render in each budget */}
             {Array.isArray(svgData) && svgData.map((svg, index) => (
-                !logged && svg ? <BudgetContainer key={index} svgData={svg}/> : null
+                !logged && svg ? <BudgetContainer key={index} svgData={svg} /> : null
             ))}
         </>
     );

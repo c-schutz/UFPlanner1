@@ -21,9 +21,9 @@ export const VDataProvider = ({ children }) => {
     // Effect to store logged state in sessionStorage when it changes
     useEffect(() => {
         sessionStorage.setItem('logged', logged);
-        if(!logged){//must have changed from true to false so clear sessionStorage
-            sessionStorage.clear('budgets');
-        }
+        // if(!logged){ //must have changed from true to false so clear sessionStorage
+        //     sessionStorage.clear('budgets');
+        // }
     }, [logged]);
 
     // Update context value

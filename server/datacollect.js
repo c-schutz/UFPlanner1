@@ -32,7 +32,7 @@ export function Visualize(nodeData) {
         svgStrings.push(d3n.svgString());
     });
 
-    console.log(svgStrings);
+    //console.log(svgStrings);
     return svgStrings;
 }
 
