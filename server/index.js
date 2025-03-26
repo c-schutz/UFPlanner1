@@ -41,31 +41,47 @@ app.get("/", (req, res) => {
 // });
 
 // Original POST endpoint POST is for sending data since it doesn't appear on the url
-app.post('/Budget/Allocation', (req, res) => {
+app.post('/Budget/Allocation', async (req, res) => {
   try {
-    const requestData = req.body;
-    console.log("Received data:", requestData);
-    if (!requestData.isLoggedIn) { //if not logged in handle data differently
-      const svgArray = Visualize(requestData.data);
+    const userID = parseInt(req.body.data.userID, 10);
+    const { data: budgetData } = req.body;
+    console.log("Received data:", req.body);
+
+    if (!req.body.isLoggedIn) {
+      const svgArray = Visualize(req.body.data);
 
       const responseData = {
         message: 'Data received successfully',
         name: 'John Doe',
         age: 30,
-        receivedData: requestData, // Echo back the received data
+        receivedData: req.body,
         svgs: svgArray
       };
 
       res.json(responseData);
-    }else{//logged in
-      res.json("Budget Successfully Stored");
+    } else {
+      if (!userID) {
+        return res.status(400).json({ error: "User ID is required" });
+      }
+      const [userData] = await pool.query('SELECT data FROM budgets WHERE userID = ?', [userID]);
+
+      if (userData.length) {
+        // There's existing data, append new data
+        let updatedBudgetData = userData[0].data ? userData[0].data : [];
+        updatedBudgetData.push(budgetData);
+        await pool.query('UPDATE budgets SET data = ? WHERE userID = ?', [JSON.stringify(updatedBudgetData), userID]);
+        res.json({ message: "Budget data updated successfully" });
+      } else {
+        // No existing data, create new entry
+        await pool.query('INSERT INTO budgets (userID, data) VALUES (?, ?)', [userID, JSON.stringify([budgetData])]);
+        res.json({ message: "Budget entry created successfully" });
+      }
     }
   } catch (error) {
     console.error('Error processing POST request:', error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 
 // Login route
 app.post("/login", async (req, res) => {
@@ -90,9 +106,9 @@ app.post("/login", async (req, res) => {
 
     // Successful login
     res.json({
-        message: "Login successful",
-        userID: user.id, // Return the user's ID
-        user: user // Optionally return more user details as needed
+      message: "Login successful",
+      userID: user.id, // Return the user's ID
+      user: user // Optionally return more user details as needed
     });
 
   } catch (error) {

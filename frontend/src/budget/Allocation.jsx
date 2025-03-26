@@ -102,23 +102,13 @@ function Allocation() {
             if (logged) {
 
                 console.log("User is logged in send to backend");
-                //create fake budgetID/update if user isn't logged in
-                let bID = JSON.parse(sessionStorage.getItem('currentBID'));
-                if (bID == null) { //this is the first budget they are creating
-                    sessionStorage.setItem('currentBID', 1);
-                    bID = 1;
-                } else {
-                    sessionStorage.setItem('currentBID', parseInt(bID, 10) + 1);
-                }
 
-
-                console.log("User isn't logged in concatenate in sessionStorage");
                 let qData = JSON.parse(sessionStorage.getItem('currentqdata'));
                 let bData = JSON.parse(sessionStorage.getItem('currentbdata'));
                 let aData = JSON.parse(sessionStorage.getItem('currentadata'));
 
                 let fullData = {
-                    budgetID: bID,
+                    userID: sessionStorage.getItem('userID'),
                     questionnaire: qData,
                     banking: bData,
                     allocation: aData
