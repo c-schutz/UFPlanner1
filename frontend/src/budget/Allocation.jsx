@@ -101,7 +101,7 @@ function Allocation() {
             //change functionality based upon whether user is logged or not
             if (logged) {
                 console.log("User is logged in send to backend");
-
+                handleSubmit();
             } else {
                 //create fake budgetID/update if user isn't logged in
                 let bID = JSON.parse(sessionStorage.getItem('currentBID'));
