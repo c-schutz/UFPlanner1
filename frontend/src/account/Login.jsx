@@ -30,6 +30,7 @@ const Login = ({ handleStatus }) => {
       }
 
       console.log("Login successful:", data);
+      sessionStorage.setItem('userID', JSON.stringify(data.userID));
       //logged in logic here
       setLogged(true);
       handleStatus("summary"); // Redirect to another page

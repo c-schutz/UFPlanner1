@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 // Create the context
 const VDataContext = createContext();
@@ -6,20 +6,32 @@ const VDataContext = createContext();
 // Export the provider as its own component
 export const VDataProvider = ({ children }) => {
     const [vData, setVData] = useState(null);
-    const [logged, setLogged] = useState(false); // State for user logged status
+    // Initialize the logged state from sessionStorage
+    const [logged, setLogged] = useState(() => {
+        // Retrieve the logged state from sessionStorage if available
+        const loggedState = sessionStorage.getItem('logged');
+        return loggedState === 'true' ? true : false;
+    });
 
     // Function to set vData
     const setV = (v) => {
         setVData(v);
     };
 
+    // Effect to store logged state in sessionStorage when it changes
+    useEffect(() => {
+        sessionStorage.setItem('logged', logged);
+        if(!logged){//must have changed from true to false so clear sessionStorage
+            sessionStorage.clear('budgets');
+        }
+    }, [logged]);
+
     // Update context value
-    // Adding logged and setLogged to the provided context values
     const value = { 
         vData, 
         setV, 
-        logged,      // Provide logged state
-        setLogged    // Provide function to modify logged state
+        logged,     // Provide logged state
+        setLogged   // Provide function to modify logged state
     };
 
     return (

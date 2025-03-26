@@ -100,7 +100,56 @@ function Allocation() {
 
             //change functionality based upon whether user is logged or not
             if (logged) {
+
                 console.log("User is logged in send to backend");
+                //create fake budgetID/update if user isn't logged in
+                let bID = JSON.parse(sessionStorage.getItem('currentBID'));
+                if (bID == null) { //this is the first budget they are creating
+                    sessionStorage.setItem('currentBID', 1);
+                    bID = 1;
+                } else {
+                    sessionStorage.setItem('currentBID', parseInt(bID, 10) + 1);
+                }
+
+
+                console.log("User isn't logged in concatenate in sessionStorage");
+                let qData = JSON.parse(sessionStorage.getItem('currentqdata'));
+                let bData = JSON.parse(sessionStorage.getItem('currentbdata'));
+                let aData = JSON.parse(sessionStorage.getItem('currentadata'));
+
+                let fullData = {
+                    budgetID: bID,
+                    questionnaire: qData,
+                    banking: bData,
+                    allocation: aData
+                };
+
+
+                setLoading(true);
+                try {
+                    const data = {
+                        data: fullData, 
+                        isLoggedIn: true
+                    };
+                    const dataToSend = JSON.stringify(data);
+                    console.log(dataToSend);
+
+                    const responseData = await fetchData(dataToSend);
+                    console.log(responseData);
+
+                    await timeout(2000);//example delay from server
+
+                    if (true) {//check active suggestions
+                        setSuggest(true);
+                        setSuggestion({ test: 1 });
+                    }
+
+                    handleSubmit();
+                } catch (error) {
+                    console.error('Data loading failed:', error);
+                } finally {
+                    setLoading(false);
+                }
                 handleSubmit();
             } else {
                 //create fake budgetID/update if user isn't logged in
