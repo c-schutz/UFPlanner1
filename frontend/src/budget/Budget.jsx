@@ -100,6 +100,9 @@ function Budget() {
             {Array.isArray(svgData) && svgData.map((svg, index) => (
                 !logged && svg ? <BudgetContainer key={index} svgData={svg} /> : null
             ))}
+            {Array.isArray(svgData) && svgData.map((svg, index) => (
+                logged && svg ? <BudgetContainer key={index} svgData={svg} /> : null
+            ))}
         </>
     );
 }
