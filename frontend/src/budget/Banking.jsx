@@ -8,10 +8,10 @@ function Banking() {
     const navigate = useNavigate();
 
     const [categories, setCategories] = useState(() => {
-        if (localStorage.getItem("localBankingCats") == null) {
+        if (sessionStorage.getItem("localBankingCats") == null) {
             return bankingcats;
         } else {
-            return JSON.parse(localStorage.getItem("localBankingCats"));
+            return JSON.parse(sessionStorage.getItem("localBankingCats"));
         }
     });
 
@@ -36,8 +36,8 @@ function Banking() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('Banking Data:', categories);
-        localStorage.setItem('localBankingCats', JSON.stringify(categories));
+        //console.log('Banking Data:', categories);
+        sessionStorage.setItem('currentbdata', JSON.stringify(categories));
         navigate('/Budget/Allocation');
     };
 

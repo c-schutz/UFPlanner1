@@ -13,6 +13,7 @@ nav {
     top: 0px;
     background-color: orange;
     border-radius: 1vh;
+    z-index: 1000;
 }
 
 .linklist{
