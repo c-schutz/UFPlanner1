@@ -19,7 +19,8 @@ function Budget() {
             async function fetchData() {
                 try {
                     const userData = JSON.stringify({
-                        userID: sessionStorage.getItem('userID')
+                        userID: sessionStorage.getItem('userID'),
+                        screenheight: window.innerHeight
                     });
 
                     const response = await fetch("http://localhost:3001/api/budget-data", {
@@ -98,10 +99,10 @@ function Budget() {
             </div>
             {/* pass in the svgData to render in each budget */}
             {Array.isArray(svgData) && svgData.map((svg, index) => (
-                !logged && svg ? <BudgetContainer key={index} svgData={svg} /> : null
+                !logged && svg ? <BudgetContainer key={index} svgData={svg}/> : null
             ))}
             {Array.isArray(svgData) && svgData.map((svg, index) => (
-                logged && svg ? <BudgetContainer key={index} svgData={svg} /> : null
+                logged && svg ? <BudgetContainer key={index} svgData={svg}/> : null
             ))}
         </>
     );

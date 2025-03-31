@@ -119,7 +119,8 @@ function Allocation() {
                 try {
                     const data = {
                         data: fullData, 
-                        isLoggedIn: true
+                        isLoggedIn: true,
+                        screenheight: window.innerHeight
                     };
                     const dataToSend = JSON.stringify(data);
                     console.log(dataToSend);
@@ -178,7 +179,8 @@ function Allocation() {
                 try {
                     const data = { //send the full budget data and tell backend that user isn't logged
                         data: JSON.parse(sessionStorage.getItem(name)), //already in JSON.stringify() format
-                        isLoggedIn: false
+                        isLoggedIn: false,
+                        screenheight: window.innerHeight
                     };
                     const dataToSend = JSON.stringify(data);
                     // if(isJson(dataToSend)){

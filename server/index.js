@@ -45,10 +45,12 @@ app.post('/Budget/Allocation', async (req, res) => {
   try {
     const userID = parseInt(req.body.data.userID, 10);
     const { data: budgetData } = req.body;
+    const height = req.body.screenheight;
+    console.log(height);
     console.log("Received data:", req.body);
 
     if (!req.body.isLoggedIn) {
-      const svgArray = Visualize(req.body.data);
+      const svgArray = Visualize(req.body.data, height);
 
       const responseData = {
         message: 'Data received successfully',
@@ -151,6 +153,7 @@ app.post("/signup", async (req, res) => {
 
 app.post("/api/budget-data", async (req, res) => {
   const userID = parseInt(req.body.userID, 10); // Convert userID from string to integer
+  const screenHeight = req.body.screenheight;
   if (!userID) {
     return res.status(400).json({ error: "Invalid or no User ID provided" });
   }
@@ -166,7 +169,7 @@ app.post("/api/budget-data", async (req, res) => {
 
     // Process the data with the Visualize function
     // Assuming Visualize function accepts budget data and returns the visualized data
-    const visualizedData = Visualize(budgetData);
+    const visualizedData = Visualize(budgetData, screenHeight);
 
     // Return the visualized data as the response
     res.json({ visualizedData: visualizedData });
