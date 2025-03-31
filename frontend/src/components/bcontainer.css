@@ -1,4 +1,4 @@
-.bHolder{
+.bHolder {
     /* allows positioning within the div */
     position: relative;
 
@@ -9,20 +9,42 @@
     border-radius: .1vw;
     margin: 5vh;
     z-index: 0;
+    padding: 2vh; /* Add padding to ensure content doesn't touch the border */
+    min-height: 20vh; /* Ensure minimum height */
 }
 
-.bTitle{
+.bTitle {
     position: absolute;
     top: 0;
     left: 0;
-    margin: 0;
+    margin: 1vh; /* Add some margin */
     font-size: larger;
+    padding: 0.5vh 1vh; /* Add some padding */
 }
 
-.updateButton{
-    bottom: 0;
-    left: 0;
-    margin-top: 5vh;
+.contentWrapper {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end; /* Align items at the bottom */
+    width: 100%;
+    height: 100%;
+}
+
+.svgContainer {
+    flex: 1; /* Take up available space */
+    display: flex;
+    justify-content: flex-end; /* Align to the right */
+    margin-right: 2vh; /* Space between SVG and button */
+}
+
+.buttonContainer {
+    display: flex;
+    align-items: flex-end; /* Align button at the bottom */
+    margin-bottom: 1vh; /* Small margin from bottom */
+}
+
+.updateButton {
     background-color: lightcoral;
     color: white;
     padding: 10px 20px;
@@ -30,9 +52,15 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-
+    white-space: nowrap; /* Prevents button text from wrapping */
 }
 
-.z-index{
+.z-index {
     z-index: 0;
+}
+
+/* Make SVG responsive */
+.svgContainer svg {
+    height: auto;
+    max-height: 100%;
 }

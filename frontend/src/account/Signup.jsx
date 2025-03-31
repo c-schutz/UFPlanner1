@@ -23,7 +23,7 @@ const Signup = ({handleStatus}) => {
               }
   
               console.log("Signup successful:", data);
-              sessionStorage.setItem('userID', data.userID)
+              sessionStorage.setItem('userID', JSON.stringify(data.userID));
               handleStatus("login"); // Redirect to another page
   
           } catch (err) {
