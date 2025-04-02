@@ -85,7 +85,8 @@ app.post("/login", async (req, res) => {
         console.error("Database error:", error);
         res.status(500).json({ message: "Internal server error" });
     }
-});
+}); 
+//Signup Route
 app.post("/signup", async (req, res) => {
   console.log("Signup request received:", req.body);  // Log request data
 
