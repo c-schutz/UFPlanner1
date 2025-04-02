@@ -11,7 +11,7 @@ const Account = ({userStatus, setUserStatus}) => {
     }  
     //uses the UserStatus to render which page should be viewed.
     const renderView = () => {
-      console.log(userStatus)
+      //console.log(userStatus)
         switch (userStatus) {
           case 'login':
             return <Login handleStatus = {handleStatus} />;
