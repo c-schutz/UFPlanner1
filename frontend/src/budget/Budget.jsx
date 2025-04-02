@@ -99,10 +99,10 @@ function Budget() {
             </div>
             {/* pass in the svgData to render in each budget */}
             {Array.isArray(svgData) && svgData.map((svg, index) => (
-                !logged && svg ? <BudgetContainer key={index} svgData={svg}/> : null
+                !logged && svg ? <BudgetContainer key={index} svgData={svg} bIndex={index} canDelete={false}/> : null
             ))}
             {Array.isArray(svgData) && svgData.map((svg, index) => (
-                logged && svg ? <BudgetContainer key={index} svgData={svg}/> : null
+                logged && svg ? <BudgetContainer key={index} bIndex={index} svgData={svg} canDelete={true}/> : null
             ))}
         </>
     );
