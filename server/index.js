@@ -167,8 +167,6 @@ app.post("/api/budget-data", async (req, res) => {
 
 app.post("/api/delete", async (req, res) => {
   const { bIndex, userID } = req.body;
-  console.log(bIndex);
-  console.log(userID);
 
   if (bIndex === undefined || !userID) {
     return res.status(400).json({ message: "Both bIndex and userID are required" });

@@ -1,29 +1,34 @@
 const questions = [
     {
        id: 1,
-       question: "Question 1",
-       options: ["yes", "no"]
+       question: "I want a budget focused on needs",
+       options: ["very much so", "a little bit", "not sure", "not really", "no"]
     },
     {
       id: 2,
-      question: "Question 2",
-      options: ["yes", "no"]
+      question: "I have a lot of unavoidable expenses",
+      options: ["very much so", "a little bit", "not sure", "not really", "no"]
    },
    {
       id: 3,
-      question: "Question 3",
-      options: ["yes", "no"]
+      question: "I don't mind spending on stuff I enjoy",
+      options: ["very much so", "a little bit", "not sure", "not really", "no"]
    },
    {
       id: 4,
-      question: "Question 4",
-      options: ["yes", "no"]
+      question: "I have expensive hobbies",
+      options: ["very much so", "a little bit", "not sure", "not really", "no"]
    },
     {
        id: 5,
-       question: "Question 5",
-       options: ["yes", "no"]
-    }
+       question: "I want a budget focused on saving",
+       options: ["very much so", "a little bit", "not sure", "not really", "no"]
+    },
+    {
+      id: 6,
+      question: "I typically have a lot of excess money",
+      options: ["very much so", "a little bit", "not sure", "not really", "no"]
+   }
  ];
  
  export default questions;

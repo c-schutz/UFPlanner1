@@ -10,13 +10,13 @@ function Questionnaire() {
     //console.log(logged); test if log is working
 
     const [answers, setAnswers] = useState(() => {
-        const savedAnswers = sessionStorage.getItem('answers');
+        const savedAnswers = sessionStorage.getItem('currentqdata');
         if (savedAnswers) {
             return JSON.parse(savedAnswers);
         } else {
             const initialAnswers = {};
             questions.forEach(question => {
-                initialAnswers[question.id] = "no"; // no initialization if there is no data stored
+                initialAnswers[question.id] = question.options[Math.floor((question.options.length - 1)/2)]; // no initialization if there is no data stored
             });
             return initialAnswers;
         }
@@ -39,7 +39,7 @@ function Questionnaire() {
     };
 
     const backClick = () => {
-        //sessionStorage.clear();
+        sessionStorage.removeItem('currentqdata');
         navigate('/Budget');
     }
 
