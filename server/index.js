@@ -23,23 +23,6 @@ app.get("/", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
 
-// Add a GET endpoint to match the frontend request
-// app.get('/Budget/Allocation', (req, res) => {
-//   try {
-//     let r = Testing();
-//     console.log("GET request to /Budget/Allocation:", r);
-//     const data = {
-//       message: 'This is data from the GET endpoint',
-//       name: 'John Doe',
-//       age: 30
-//     };
-//     res.json(data);
-//   } catch (error) {
-//     console.error('Error processing GET request:', error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
-
 // Original POST endpoint POST is for sending data since it doesn't appear on the url
 app.post('/Budget/Allocation', async (req, res) => {
   try {
@@ -164,7 +147,7 @@ app.post("/api/budget-data", async (req, res) => {
     if (results.length === 0) {
       return res.status(404).json({ error: "No budget data found for the given user ID" });
     }
-    
+
     const budgetData = results[0].data;
 
     // Process the data with the Visualize function
@@ -172,7 +155,48 @@ app.post("/api/budget-data", async (req, res) => {
     const visualizedData = Visualize(budgetData, screenHeight);
 
     // Return the visualized data as the response
-    res.json({ visualizedData: visualizedData });
+    res.json({
+      visualizedData: visualizedData,
+      rawdata: budgetData
+    });
+  } catch (error) {
+    console.error("Error processing the request:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.post("/api/delete", async (req, res) => {
+  const { bIndex, userID } = req.body;
+  console.log(bIndex);
+  console.log(userID);
+
+  if (bIndex === undefined || !userID) {
+    return res.status(400).json({ message: "Both bIndex and userID are required" });
+  }
+
+  try {
+    // Fetch the current budget data for the user
+    const [budgets] = await pool.query('SELECT data FROM budgets WHERE userID = ?', [userID]);
+    if (budgets.length === 0) {
+      return res.status(404).json({ message: "Budget data not found for this user" });
+    }
+
+    // Parse the data column, which should be an array of budgets
+    let budgetData = budgets[0].data;
+
+    // Check if bIndex is within bounds
+    if (bIndex < 0 || bIndex >= budgetData.length) {
+      return res.status(400).json({ message: "Invalid bIndex provided" });
+    }
+
+    // Remove the element at bIndex
+    budgetData.splice(bIndex, 1);
+
+    // Update the database with the new budget data
+    await pool.query('UPDATE budgets SET data = ? WHERE userID = ?', [JSON.stringify(budgetData), userID]);
+
+    res.json({ message: "Budget entry deleted successfully" });
+
   } catch (error) {
     console.error("Error processing the request:", error);
     res.status(500).json({ error: "Internal Server Error" });
