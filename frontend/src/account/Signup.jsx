@@ -16,13 +16,14 @@ const Signup = ({handleStatus}) => {
               });
   
               const data = await response.json();
-  
+
               if (!response.ok) {
                   setError(data.message);
                   return;
               }
   
               console.log("Signup successful:", data);
+              sessionStorage.setItem('userID', JSON.stringify(data.userID));
               handleStatus("login"); // Redirect to another page
   
           } catch (err) {

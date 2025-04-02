@@ -11,8 +11,9 @@ nav {
     margin: 0;
     position: sticky;
     top: 0px;
-    background-color: lightcoral;
+    background-color: orange;
     border-radius: 1vh;
+    z-index: 1000;
 }
 
 .linklist{
