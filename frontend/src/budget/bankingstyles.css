@@ -51,11 +51,12 @@
 .suggestions {
     display: flex;
     justify-content: center;
-    gap: 20vw;
+    gap: 5vw;
 }
 
 .suggest{
     margin-top: 7vh;
+    width: 30vw;
 }
 
 .remove{

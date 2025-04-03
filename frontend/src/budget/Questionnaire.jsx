@@ -7,8 +7,7 @@ import { useVData } from '../Vcontext';
 
 function Questionnaire() {
     const { logged, setLogged } = useVData();
-    //console.log(logged); test if log is working
-
+    
     const [answers, setAnswers] = useState(() => {
         const savedAnswers = sessionStorage.getItem('currentqdata');
         if (savedAnswers) {
@@ -16,7 +15,12 @@ function Questionnaire() {
         } else {
             const initialAnswers = {};
             questions.forEach(question => {
-                initialAnswers[question.id] = question.options[Math.floor((question.options.length - 1)/2)]; // no initialization if there is no data stored
+                // Store both the selected option and the question type
+                initialAnswers[question.id] = {
+                    response: question.options[Math.floor((question.options.length - 1) / 2)],
+                    type: question.type,
+                    weight: question.weight
+                };
             });
             return initialAnswers;
         }
@@ -24,16 +28,19 @@ function Questionnaire() {
 
     const navigate = useNavigate();
 
-    const handleOptionChange = (questionId, selectedOption) => {
+    const handleOptionChange = (questionId, selectedOption, questionType, questionWeight) => {
         setAnswers(prevAnswers => ({
             ...prevAnswers,
-            [questionId]: selectedOption
+            [questionId]: {
+                response: selectedOption,
+                type: questionType,
+                weight: questionWeight
+            },
         }));
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        //console.log('Submitted Answers:', answers);
         sessionStorage.setItem('currentqdata', JSON.stringify(answers));
         navigate('/Budget/Banking');
     };
@@ -60,8 +67,10 @@ function Questionnaire() {
                                         <input
                                             type="radio"
                                             value={option}
-                                            checked={answers[question.id] === option}
-                                            onChange={() => handleOptionChange(question.id, option)}
+                                            // Update the checked condition to look at response
+                                            checked={answers[question.id]?.response === option}
+                                            // Pass question.type to handleOptionChange
+                                            onChange={() => handleOptionChange(question.id, option, question.type, question.weight)}
                                         />
                                         {option}
                                     </label>
@@ -83,7 +92,6 @@ function Questionnaire() {
                 </form>
             </div>
         </>
-
     );
 }
 
