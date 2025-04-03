@@ -84,7 +84,6 @@ function Budget() {
         }
     }
 
-
     return (
         <>
             <Navbar />
