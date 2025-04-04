@@ -22,17 +22,17 @@ function Banking() {
         setCategories(newCategories);
     };
 
-    const addCategory = () => {
-        const categoryName = prompt("Enter the new category name:");
-        if (categoryName) {
-            const newCategory = {
-                id: categories.length + 1,
-                name: categoryName.trim(),
-                value: ''
-            };
-            setCategories([...categories, newCategory]);
-        }
-    };
+    // const addCategory = () => {
+    //     const categoryName = prompt("Enter the new category name:");
+    //     if (categoryName) {
+    //         const newCategory = {
+    //             id: categories.length + 1,
+    //             name: categoryName.trim(),
+    //             value: ''
+    //         };
+    //         setCategories([...categories, newCategory]);
+    //     }
+    // };
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -63,6 +63,9 @@ function Banking() {
             <p>
                 Input Banking Information
             </p>
+            <p>
+                Note: if you get paid biweekly take your estimate for each week
+            </p>
             <hr className="ahr"></hr>
             <div className='formControl'>
                 <form onSubmit={checkInputs} className='form'>
@@ -85,10 +88,10 @@ function Banking() {
                                 whileHover={{ scale: 1.1 }}>
                                 Back
                             </motion.button>
-                            <motion.button type="button" onClick={addCategory} className='buttons'
+                            {/* <motion.button type="button" onClick={addCategory} className='buttons'
                                 whileHover={{ scale: 1.1 }}>
                                 Add Category
-                            </motion.button>
+                            </motion.button> */}
                             <motion.button type="submit" className='buttons'
                                 whileHover={{ scale: 1.1 }}>
                                 Submit Data

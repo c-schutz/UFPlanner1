@@ -77,7 +77,9 @@ function Allocation() {
         //update suggestion based on budgetBalancing
         if (budgetBalancing["needs"] >= 0 & budgetBalancing["wants"] >= 0 & budgetBalancing["savings"] >= 0) {//e n0
             bType = "Your questionnaire answers support a balanced budget. We have allocated amounts to each category based upon this data.";
-        } else if (budgetBalancing["needs"] <= 0 & budgetBalancing["wants"] >= 0 & budgetBalancing["savings"] >= 0) {//e0
+        } else if (budgetBalancing["needs"] <= 0 & budgetBalancing["wants"] <= 0 & budgetBalancing["savings"] <= 0) {//e0 n0 as well for all negative
+            bType = "Your questionnaire answers support a balanced budget. We have allocated amounts to each category based upon this data.";
+        }else if (budgetBalancing["needs"] <= 0 & budgetBalancing["wants"] >= 0 & budgetBalancing["savings"] >= 0) {//e0
             bType = "Your questionnaire answers support a budget focused on wants and savings. We have allocated amounts to each category based upon this data.";
         } else if (budgetBalancing["needs"] >= 0 & budgetBalancing["wants"] <= 0 & budgetBalancing["savings"] >= 0) {//w
             bType = "Your questionnaire supports a budget focused on needs and savings. We have allocated amounts to each category based upon this data.";
@@ -113,6 +115,7 @@ function Allocation() {
         function roundToTwo(num) {
             return Number(num.toFixed(2));
         }
+
         for (i = 1; i < qLength + 1; i++) {
             if (answerData[i].type == "needs") {
                 let plus = roundToTwo(answerData[i].weight * multiplier[answerData[i].response]);
@@ -196,8 +199,8 @@ function Allocation() {
 
         setCategories(updatedCategories);
 
-        console.log("Original weights:", weights);
-        console.log("Balanced weights:", balancedWeights);
+        // console.log("Original weights:", weights);
+        // console.log("Balanced weights:", balancedWeights);
 
     }, []);
 
@@ -222,11 +225,16 @@ function Allocation() {
     };
 
     const handleSubmit = () => {
-        //sessionStorage.clear(); Consider changing when deploying actual app logic instead of clearing everything
+        sessionStorage.removeItem('currentqdata');
+        sessionStorage.removeItem('currentbdata');//only delete the form data that we want to be defaulted
+        sessionStorage.removeItem('currentadata');
+        sessionStorage.removeItem('localAlloCats');
+        setCategories(cats);
         navigate('/Budget');
         //buttons can activate again after navigation occurs
         setSubmitting(false);
     };
+
     //helper used to check if something is in JSON format or not
     function isJson(str) {
         try {
@@ -374,6 +382,12 @@ function Allocation() {
         }
     };
 
+    const handleBack = () => {
+        setCategories(cats); // Reset categories to default
+        sessionStorage.removeItem('localAlloCats'); // Assuming you want to clear any session-stored categories
+        navigate('/Budget/Banking'); // Navigate to the desired route
+    };
+
     return (
         <>
             <p>Enter (percentage) allocation amounts.</p>
@@ -396,7 +410,7 @@ function Allocation() {
                         ))}
                         <div className='co'>
                             <div className="buttonContainer">
-                                <motion.button type="button" onClick={() => navigate('/Budget/Banking')} className='buttons' disabled={submitting}
+                                <motion.button type="button" onClick={handleBack} className='buttons' disabled={submitting}
                                     whileHover={{ scale: 1.1 }}>
                                     Back
                                 </motion.button>
