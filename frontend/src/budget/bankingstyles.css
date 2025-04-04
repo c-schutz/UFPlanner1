@@ -31,7 +31,7 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    clip-path: inset(0 0 45% 0);
+    clip-path: inset(0 0 60% 0);
     width: 10vw;
     animation: fadeIn .75s ease-out forwards;
 }
@@ -51,11 +51,12 @@
 .suggestions {
     display: flex;
     justify-content: center;
-    gap: 20vw;
+    gap: 5vw;
 }
 
 .suggest{
     margin-top: 7vh;
+    width: 30vw;
 }
 
 .remove{

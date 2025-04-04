@@ -55,6 +55,10 @@
     white-space: nowrap; /* Prevents button text from wrapping */
 }
 
+.updateButton:hover{
+    opacity: 80%;
+}
+
 .z-index {
     z-index: 0;
 }
@@ -63,4 +67,27 @@
 .svgContainer svg {
     height: auto;
     max-height: 100%;
+    z-index: 1;
+}
+
+.delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 1vh; /* Add some margin */
+    font-size: larger;
+    padding: 0.5vh 1vh; /* Add some padding */
+    background-color: red;
+    color: white;
+    padding: 10px 20px; 
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    white-space: nowrap; /* Prevents button text from wrapping */
+    z-index: 2;
+}
+
+.delete:hover{
+    opacity: 80%;
 }

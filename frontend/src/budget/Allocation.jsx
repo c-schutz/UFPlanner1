@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import cats from './alloccats';
 import { useNavigate } from 'react-router-dom';
 import { motion, useAnimate } from "motion/react";
@@ -9,6 +9,11 @@ function Allocation() {
     const [submitting, setSubmitting] = useState(false);
     const { vData, setV } = useVData();//get from context
     const { logged, setLogged } = useVData();
+    const [weightData, setWeightData] = useState({
+        needs: 50,
+        wants: 30,
+        savings: 20
+    });;
 
     //for testing
     function timeout(delay) {
@@ -16,7 +21,7 @@ function Allocation() {
     }
 
     const [suggest, setSuggest] = useState(false);
-    const [suggestion, setSuggestion] = useState({});
+    const [suggestion, setSuggestion] = useState("");
 
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -26,6 +31,175 @@ function Allocation() {
         const storedCats = sessionStorage.getItem('localAlloCats');
         return storedCats ? JSON.parse(storedCats) : cats;
     });
+
+    //create suggestion and default input data
+    //create suggestion and default input data
+    useEffect(() => {
+        const answerData = JSON.parse(sessionStorage.getItem('currentqdata'));
+
+        //first determine what the suggestion box will say
+        const budgetBalancing = {
+            "needs": 0,
+            "wants": 0,
+            "savings": 0
+        }
+
+        const ansToValue = {
+            "very much so": 2,
+            "a little bit": 1,
+            "not sure": 0,
+            "not really": -1,
+            "no": -2
+        }
+
+        let bType = null;
+        let i = 0;
+        const keys = Object.keys(answerData);
+        const qLength = keys.length;
+        let val = 0;
+
+        //change budgetBalancing to match questionnaire
+        for (i = 1; i < qLength + 1; i++) {
+            if (answerData[i].type == 'needs') {
+                val = ansToValue[answerData[i].response];
+                budgetBalancing["needs"] += val;
+            } else if (answerData[i].type == 'wants') {
+                val = ansToValue[answerData[i].response];
+                budgetBalancing["wants"] += val;
+            } else if (answerData[i].type == 'savings') {
+                val = ansToValue[answerData[i].response];
+                budgetBalancing["savings"] += val;
+            } else {
+                console.log("incorrect type name");
+            }
+        }
+
+        //update suggestion based on budgetBalancing
+        if (budgetBalancing["needs"] >= 0 & budgetBalancing["wants"] >= 0 & budgetBalancing["savings"] >= 0) {//e n0
+            bType = "Your questionnaire answers support a balanced budget. We have allocated amounts to each category based upon this data.";
+        } else if (budgetBalancing["needs"] <= 0 & budgetBalancing["wants"] >= 0 & budgetBalancing["savings"] >= 0) {//e0
+            bType = "Your questionnaire answers support a budget focused on wants and savings. We have allocated amounts to each category based upon this data.";
+        } else if (budgetBalancing["needs"] >= 0 & budgetBalancing["wants"] <= 0 & budgetBalancing["savings"] >= 0) {//w
+            bType = "Your questionnaire supports a budget focused on needs and savings. We have allocated amounts to each category based upon this data.";
+        } else if (budgetBalancing["needs"] <= 0 & budgetBalancing["wants"] <= 0 & budgetBalancing["savings"] >= 0) {//w0
+            bType = "Your questionnaire supports a budget focused on savings. We have allocated amounts to each category based upon this data.";
+        } else if (budgetBalancing["needs"] >= 0 & budgetBalancing["wants"] <= 0 & budgetBalancing["savings"] <= 0) {//n
+            bType = "Your questionnaire supports a budget focused on needs. We have allocated amounts to each category based upon this data.";
+        } else if (budgetBalancing["needs"] >= 0 & budgetBalancing["wants"] >= 0 & budgetBalancing["savings"] <= 0) {//s
+            bType = "Your questionnaire supports a budget focused on wants and needs. We have allocated amounts to each category based upon this data.";
+        } else if (budgetBalancing["needs"] <= 0 & budgetBalancing["wants"] >= 0 & budgetBalancing["savings"] <= 0) {//s0
+            bType = "Your questionnaire supports a budget focused on wants. We have allocated amounts to each category based upon this data.";
+        } else {
+            console.log("caleb did smth wrong :(");
+        }
+        bType ? setSuggestion(bType) : null;
+        setSuggest(true);
+
+        //now change category default values
+        let weights = {
+            "needs": 50,
+            "wants": 30,
+            "savings": 20
+        };
+
+        const multiplier = { //used to multiply the question weight based on the answer
+            "very much so": 1,
+            "a little bit": .5,
+            "not sure": 0,
+            "not really": -.5,
+            "no": -1
+        }
+
+        function roundToTwo(num) {
+            return Number(num.toFixed(2));
+        }
+        for (i = 1; i < qLength + 1; i++) {
+            if (answerData[i].type == "needs") {
+                let plus = roundToTwo(answerData[i].weight * multiplier[answerData[i].response]);
+                let minus = roundToTwo(-(plus / 2));
+                weights["needs"] += plus;
+                weights["wants"] += minus;
+                weights["savings"] += minus;
+            } else if (answerData[i].type == 'wants') {
+                let plus = roundToTwo(answerData[i].weight * multiplier[answerData[i].response]);
+                let minus = roundToTwo(-(plus / 2));
+                weights["needs"] += minus;
+                weights["wants"] += plus;
+                weights["savings"] += minus;
+            } else if (answerData[i].type == 'savings') {
+                let plus = roundToTwo(answerData[i].weight * multiplier[answerData[i].response]);
+                let minus = roundToTwo(-(plus / 2));
+                weights["needs"] += minus;
+                weights["wants"] += minus;
+                weights["savings"] += plus;
+            } else {
+                console.log("incorrect weighting name");
+            }
+        }
+
+        // Handle negative weights
+        function balanceNegativeWeights(weights) {
+            let adjustedWeights = { ...weights };
+
+            // Check if any weights are negative
+            const categories = ["needs", "wants", "savings"];
+            const negativeCategories = categories.filter(cat => adjustedWeights[cat] < 0);
+
+            if (negativeCategories.length > 0) {
+                negativeCategories.forEach(negCat => {
+                    const negValue = adjustedWeights[negCat];
+                    const otherCategories = categories.filter(cat => cat !== negCat);
+
+                    // Calculate how much to add to the other categories
+                    const addPerCategory = roundToTwo(-negValue / otherCategories.length);
+
+                    // Add half the negative value to each of the other categories
+                    otherCategories.forEach(cat => {
+                        adjustedWeights[cat] += addPerCategory;
+                    });
+
+                    // Set the negative category to 0
+                    adjustedWeights[negCat] = 0;
+                });
+            }
+
+            // Make sure the sum is exactly 100
+            let totalWeight = categories.reduce((sum, cat) => sum + adjustedWeights[cat], 0);
+
+            if (Math.abs(totalWeight - 100) > 0.01) {
+                const scaleFactor = 100 / totalWeight;
+                categories.forEach(cat => {
+                    adjustedWeights[cat] = roundToTwo(adjustedWeights[cat] * scaleFactor);
+                });
+            }
+
+            return adjustedWeights;
+        }
+
+        // Apply the balancing mechanism
+        const balancedWeights = balanceNegativeWeights(weights);
+
+        // Update the weightData state with the balanced weights
+        setWeightData(balancedWeights);
+
+        // Also update the categories with these balanced weights
+        const updatedCategories = categories.map(category => {
+            if (category.name.toLowerCase() === "needs") {
+                return { ...category, value: balancedWeights.needs };
+            } else if (category.name.toLowerCase() === "wants") {
+                return { ...category, value: balancedWeights.wants };
+            } else if (category.name.toLowerCase() === "savings") {
+                return { ...category, value: balancedWeights.savings };
+            }
+            return category;
+        });
+
+        setCategories(updatedCategories);
+
+        console.log("Original weights:", weights);
+        console.log("Balanced weights:", balancedWeights);
+
+    }, []);
 
     const handleInputChange = (id, newValue) => {
         const newCategories = categories.map(category =>
@@ -40,7 +214,7 @@ function Allocation() {
             const newCategory = {
                 id: categories.length + 1,
                 name: categoryName.trim(),
-                value: ''
+                value: 0
             };
             setCategories([...categories, newCategory]);  // Ensures real-time update in UI
             sessionStorage.setItem('localAlloCats', JSON.stringify([...categories, newCategory]));
@@ -118,7 +292,7 @@ function Allocation() {
                 setLoading(true);
                 try {
                     const data = {
-                        data: fullData, 
+                        data: fullData,
                         isLoggedIn: true,
                         screenheight: window.innerHeight
                     };
@@ -129,11 +303,6 @@ function Allocation() {
                     console.log(responseData);
 
                     await timeout(2000);//example delay from server
-
-                    if (true) {//check active suggestions
-                        setSuggest(true);
-                        setSuggestion({ test: 1 });
-                    }
 
                     handleSubmit();
                 } catch (error) {
@@ -195,11 +364,6 @@ function Allocation() {
 
                     await timeout(2000);//example delay from server
 
-                    if (true) {//check active suggestions
-                        setSuggest(true);
-                        setSuggestion({ test: 1 });
-                    }
-
                     handleSubmit();
                 } catch (error) {
                     console.error('Data loading failed:', error);
@@ -207,33 +371,6 @@ function Allocation() {
                     setLoading(false);
                 }
             }
-            /*
-            setLoading(true);
-            try {
-                const dataToSend = {
-                    categories: categories,  // Send the actual categories data
-                    additionalInfo: "User allocation data"
-                };
-
-                const responseData = await fetchData(dataToSend);
-                //get data that we send to App.jsx to then send Budget.jsx
-                setV(responseData);
-                console.log("Server response:", responseData);
-
-                await timeout(2000);//example delay from server
-
-                if (true) {//check active suggestions
-                    setSuggest(true);
-                    setSuggestion({ test: 1 });
-                }
-
-                handleSubmit();
-            } catch (error) {
-                console.error('Data loading failed:', error);
-            } finally {
-                setLoading(false);
-            }
-            */
         }
     };
 
@@ -275,7 +412,7 @@ function Allocation() {
                         </div>
                     </form>
                 </div>
-                <div className={suggest ? 'suggest' : 'remove'}><p>{JSON.stringify(suggestion.test)}</p></div>
+                <div className={suggest ? 'suggest' : 'remove'}><p>{suggestion}</p></div>
             </div>
             <div className='loading'>
                 {loading && (<object className='loadingCircles' type="image/svg+xml" data="/circleloadingsm.svg">Your browser does not support SVG</object>)}

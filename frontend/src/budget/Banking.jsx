@@ -8,10 +8,10 @@ function Banking() {
     const navigate = useNavigate();
 
     const [categories, setCategories] = useState(() => {
-        if (sessionStorage.getItem("localBankingCats") == null) {
+        if (sessionStorage.getItem("currentbdata") == null) {
             return bankingcats;
         } else {
-            return JSON.parse(sessionStorage.getItem("localBankingCats"));
+            return JSON.parse(sessionStorage.getItem("currentbdata"));
         }
     });
 
