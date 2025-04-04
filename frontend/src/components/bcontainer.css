@@ -3,45 +3,55 @@
     position: relative;
 
     /* sets the distance between outline and border */
-    outline-offset: 1vw; 
+    outline-offset: 1vw;
     outline-style: solid;
     outline-width: .1vh;
     border-radius: .1vw;
     margin: 5vh;
     z-index: 0;
-    padding: 2vh; /* Add padding to ensure content doesn't touch the border */
-    min-height: 20vh; /* Ensure minimum height */
+    padding: 2vh;
+    /* Add padding to ensure content doesn't touch the border */
+    min-height: 20vh;
+    /* Ensure minimum height */
 }
 
 .bTitle {
     position: absolute;
     top: 0;
     left: 0;
-    margin: 1vh; /* Add some margin */
+    margin: 1vh;
+    /* Add some margin */
     font-size: larger;
-    padding: 0.5vh 1vh; /* Add some padding */
+    padding: 0.5vh 1vh;
+    /* Add some padding */
 }
 
 .contentWrapper {
     position: relative;
     display: flex;
     justify-content: space-between;
-    align-items: flex-end; /* Align items at the bottom */
+    align-items: flex-end;
+    /* Align items at the bottom */
     width: 100%;
     height: 100%;
 }
 
 .svgContainer {
-    flex: 1; /* Take up available space */
+    flex: 1;
+    /* Take up available space */
     display: flex;
-    justify-content: flex-end; /* Align to the right */
-    margin-right: 2vh; /* Space between SVG and button */
+    justify-content: flex-end;
+    /* Align to the right */
+    margin-right: 2vh;
+    /* Space between SVG and button */
 }
 
 .buttonContainer {
     display: flex;
-    align-items: flex-end; /* Align button at the bottom */
-    margin-bottom: 1vh; /* Small margin from bottom */
+    align-items: flex-end;
+    /* Align button at the bottom */
+    margin-bottom: 1vh;
+    /* Small margin from bottom */
 }
 
 .updateButton {
@@ -52,10 +62,11 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    white-space: nowrap; /* Prevents button text from wrapping */
+    white-space: nowrap;
+    /* Prevents button text from wrapping */
 }
 
-.updateButton:hover{
+.updateButton:hover {
     opacity: 80%;
 }
 
@@ -74,20 +85,36 @@
     position: absolute;
     top: 0;
     right: 0;
-    margin: 1vh; /* Add some margin */
+    margin: 1vh;
+    /* Add some margin */
     font-size: larger;
-    padding: 0.5vh 1vh; /* Add some padding */
+    padding: 0.5vh 1vh;
+    /* Add some padding */
     background-color: red;
     color: white;
-    padding: 10px 20px; 
+    padding: 10px 20px;
     font-size: 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    white-space: nowrap; /* Prevents button text from wrapping */
+    white-space: nowrap;
+    /* Prevents button text from wrapping */
     z-index: 2;
 }
 
-.delete:hover{
+.delete:hover {
     opacity: 80%;
+}
+
+.calenderContainer{
+    position: absolute;
+    top: 17%;
+    width: 65%;
+    height: 60%;
+    z-index: 10;
+    /* background-color: red; */
+}
+
+.toolTip{
+    z-index: 10;
 }
