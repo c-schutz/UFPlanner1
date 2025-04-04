@@ -77,7 +77,9 @@ function Allocation() {
         //update suggestion based on budgetBalancing
         if (budgetBalancing["needs"] >= 0 & budgetBalancing["wants"] >= 0 & budgetBalancing["savings"] >= 0) {//e n0
             bType = "Your questionnaire answers support a balanced budget. We have allocated amounts to each category based upon this data.";
-        } else if (budgetBalancing["needs"] <= 0 & budgetBalancing["wants"] >= 0 & budgetBalancing["savings"] >= 0) {//e0
+        } else if (budgetBalancing["needs"] <= 0 & budgetBalancing["wants"] <= 0 & budgetBalancing["savings"] <= 0) {//e0 n0 as well for all negative
+            bType = "Your questionnaire answers support a balanced budget. We have allocated amounts to each category based upon this data.";
+        }else if (budgetBalancing["needs"] <= 0 & budgetBalancing["wants"] >= 0 & budgetBalancing["savings"] >= 0) {//e0
             bType = "Your questionnaire answers support a budget focused on wants and savings. We have allocated amounts to each category based upon this data.";
         } else if (budgetBalancing["needs"] >= 0 & budgetBalancing["wants"] <= 0 & budgetBalancing["savings"] >= 0) {//w
             bType = "Your questionnaire supports a budget focused on needs and savings. We have allocated amounts to each category based upon this data.";
@@ -196,8 +198,8 @@ function Allocation() {
 
         setCategories(updatedCategories);
 
-        console.log("Original weights:", weights);
-        console.log("Balanced weights:", balancedWeights);
+        // console.log("Original weights:", weights);
+        // console.log("Balanced weights:", balancedWeights);
 
     }, []);
 
@@ -222,7 +224,8 @@ function Allocation() {
     };
 
     const handleSubmit = () => {
-        //sessionStorage.clear(); Consider changing when deploying actual app logic instead of clearing everything
+        sessionStorage.removeItem('currentqdata');
+        sessionStorage.removeItem('currentbdata');//only delete the form data that we want to be defaulted
         navigate('/Budget');
         //buttons can activate again after navigation occurs
         setSubmitting(false);
