@@ -222,7 +222,7 @@ export function BudgetContainer({ svgData, bIndex, canDelete, userID, bData }) {
                     />
 
                     {tooltip.visible && (
-                        <div className="tooltip" style={{ position: 'relative', left: "20%", zIndex: 1000 }}>
+                        <div className="tooltip" style={{ position: 'relative', left: "20%", zIndex: 1000, fontSize: '4vh'}}>
                             {tooltip.content}
                         </div>
                     )}
