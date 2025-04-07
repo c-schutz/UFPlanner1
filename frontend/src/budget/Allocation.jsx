@@ -397,7 +397,7 @@ function Allocation() {
                     <form onSubmit={checkInputs} className='form'>
                         {categories.map((category) => (
                             <div key={category.id}>
-                                <label className='lStyle'>
+                                <label className='lstyleb'>
                                     {category.name}:
                                     <input
                                         type="number"
@@ -428,6 +428,7 @@ function Allocation() {
                 </div>
                 <div className={suggest ? 'suggest' : 'remove'}><p>{suggestion}</p></div>
             </div>
+            {loading && <div className="loadingOverlay"></div>}
             <div className='loading'>
                 {loading && (<object className='loadingCircles' type="image/svg+xml" data="/circleloadingsm.svg">Your browser does not support SVG</object>)}
             </div>

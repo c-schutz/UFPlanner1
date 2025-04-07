@@ -47,6 +47,7 @@ function Questionnaire() {
 
     const backClick = () => {
         sessionStorage.removeItem('currentqdata');
+        sessionStorage.removeItem('currentbdata');
         navigate('/Budget');
     }
 
