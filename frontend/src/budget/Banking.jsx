@@ -71,7 +71,7 @@ function Banking() {
                 <form onSubmit={checkInputs} className='form'>
                     {categories.map((category) => (
                         <div key={category.id}>
-                            <label className='lStyle'>
+                            <label className='lstyleb'>
                                 {category.name}:
                                 <input
                                     type="number"
