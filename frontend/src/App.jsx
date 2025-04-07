@@ -13,7 +13,6 @@ import { VDataProvider } from './Vcontext'; // Import the provider
 
 function App() {
   const [data, setData] = useState(null);
-  const [userStatus, setUserStatus] = useState("login");
 
   // useEffect(() => {
   //   fetch("http://localhost:3001/")
@@ -39,7 +38,7 @@ function App() {
           </Route>
           <Route path='Budget/Allocation' element={<Allocation />}>
           </Route>
-          <Route path='Account' element={<Account userStatus = {userStatus} setUserStatus = {setUserStatus}/>}>
+          <Route path='Account' element={<Account />}>
           </Route>
         </Routes>
       </VDataProvider>
