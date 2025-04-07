@@ -394,7 +394,7 @@ function Allocation() {
 
     return (
         <>
-            <p>Enter (percentage) allocation amounts.</p>
+            <p>Enter the percent of your weekly budget you want to allocate to each category.</p>
             <hr className="ahr"></hr>
             <div className='suggestions'>
                 <div className='formControl'>
