@@ -5,13 +5,15 @@ import Navbar from '../components/Navbar';
 import { useVData } from '../Vcontext';
 import { BudgetContainer } from '../components/BudgetContainer';
 import './bstyles.css';
+import { json } from 'd3';
 
 function Budget() {
     //hook declaration
     const { logged, setLogged } = useVData();
-    const [scope, animate] = useAnimate()
+    const [scope, animate] = useAnimate();
     const [delay, setDelay] = useState(false);
     const [svgData, setSVGData] = useState([]);
+    const [budgetData, setBudgetData] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -37,6 +39,8 @@ function Budget() {
 
                     const rData = await response.json();
                     setSVGData(rData.visualizedData);
+                    setBudgetData(rData.rawdata);
+                    //setBudgetData(rData.rawData);
                     console.log("The visualized svg data from the db is ", rData.visualizedData);
                 } catch (error) {
                     console.error(error.message);
@@ -44,6 +48,10 @@ function Budget() {
             }
             fetchData();
         } else {
+            const bD = JSON.parse(sessionStorage.getItem('budgets')); //add error handling at some point
+            
+            setBudgetData(bD); //add error handling here everything was messing up
+            
             const s = sessionStorage.getItem('svgData');
             if (s) {
                 try {
@@ -84,6 +92,7 @@ function Budget() {
         }
     }
 
+
     return (
         <>
             <Navbar />
@@ -98,12 +107,12 @@ function Budget() {
             </div>
             {/* pass in the svgData to render in each budget */}
             {Array.isArray(svgData) && svgData.map((svg, index) => (
-                !logged && svg ? <BudgetContainer key={index} svgData={svg} bIndex={index} canDelete={false}/> : null
+                !logged && svg ? <BudgetContainer bData={budgetData[index]} key={index} svgData={svg} bIndex={index} canDelete={false}/> : null
             ))}
             {Array.isArray(svgData) && svgData.map((svg, index) => (
-                logged && svg ? <BudgetContainer key={index} bIndex={index} svgData={svg} canDelete={true}/> : null
+                logged && svg ? <BudgetContainer bData={budgetData[index]} key={index} bIndex={index} svgData={svg} canDelete={true}/> : null
             ))}
-        </>
+        </> 
     );
 }
 

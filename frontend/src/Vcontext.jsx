@@ -6,11 +6,18 @@ const VDataContext = createContext();
 // Export the provider as its own component
 export const VDataProvider = ({ children }) => {
     const [vData, setVData] = useState(null);
+
     // Initialize the logged state from sessionStorage
     const [logged, setLogged] = useState(() => {
         // Retrieve the logged state from sessionStorage if available
         const loggedState = sessionStorage.getItem('logged');
         return loggedState === 'true' ? true : false;
+    });
+
+    const [state, setState] = useState(() => {
+        // Retrieve the logged state from sessionStorage if available
+        const savedState = sessionStorage.getItem('state');
+        return ['login', 'signup', 'summary'].includes(savedState) ? savedState : 'login';
     });
 
     // Function to set vData
@@ -26,12 +33,18 @@ export const VDataProvider = ({ children }) => {
         // }
     }, [logged]);
 
+    useEffect(() => {
+        sessionStorage.setItem('state', state);
+    }, [state]);
+
     // Update context value
     const value = { 
         vData, 
         setV, 
         logged,     // Provide logged state
-        setLogged   // Provide function to modify logged state
+        setLogged,   // Provide function to modify logged state
+        state,
+        setState
     };
 
     return (

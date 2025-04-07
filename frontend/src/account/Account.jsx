@@ -1,30 +1,36 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Login from "./Login"
 import Signup from "./Signup"
 import Navbar from '../components/Navbar';
 import Summary from './Summary';
+import { useVData } from "../Vcontext";
 
-const Account = ({userStatus, setUserStatus}) => { 
+const Account = () => {
+
+  const { state, setState } = useVData();
   //This is the state of the site that tell it to post the login, signup, or account summary.
-    const handleStatus = (status) => {
-        setUserStatus(status);
-    }  
-    //uses the UserStatus to render which page should be viewed.
-    const renderView = () => {
-      //console.log(userStatus)
-        switch (userStatus) {
-          case 'login':
-            return <Login handleStatus = {handleStatus} />;
-          case 'signup':
-            return <Signup handleStatus = {handleStatus}/>;
-          case 'summary':
-            return <Summary handleStatus = {handleStatus}/>;
-          default :
-            return <h2> Oh no</h2>;
-        }
+  const handleStatus = (state) => {
+    setState(state);
+  }
 
-      }; 
-      //Returns the nav bar with the renderview function that shows the right
+  useEffect(() => {
+    renderView();
+  }, [state])
+  //uses the UserStatus to render which page should be viewed.
+  const renderView = () => {
+    switch (state) {
+      case 'login':
+        return <Login handleStatus={handleStatus} />;
+      case 'signup':
+        return <Signup handleStatus={handleStatus} />;
+      case 'summary':
+        return <Summary handleStatus={handleStatus} />;
+      default:
+        return <h2> Oh no</h2>;
+    }
+
+  };
+  //Returns the nav bar with the renderview function that shows the right
   return (
     <>
       <Navbar />
