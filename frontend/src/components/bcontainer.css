@@ -106,13 +106,20 @@
     opacity: 80%;
 }
 
-.calenderContainer{
+.calenderContainerl{
     position: absolute;
     top: 17%;
     width: 65%;
     height: 60%;
     z-index: 10;
-    /* background-color: red; */
+}
+
+.calenderContainer{
+    position: absolute;
+    top: 8%;
+    width: 65%;
+    height: 60%;
+    z-index: 10;
 }
 
 .toolTip{

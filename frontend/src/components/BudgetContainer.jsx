@@ -31,12 +31,11 @@ export function BudgetContainer({ svgData, bIndex, canDelete, userID, bData }) {
     // ]
 
     const handleEvents = () => {
-        if(bData == null){
+        if (bData == null) {
             return;
         }
-        
+
         bData["allocation"].forEach(element => {
-            console.log(element.name);
             if (element.name == "Needs") {//create needs event here
                 const currentEvent =
                 {
@@ -63,7 +62,7 @@ export function BudgetContainer({ svgData, bIndex, canDelete, userID, bData }) {
                         dtstart: '2023-01-02T10:00:00'
                     },
                     extendedProps: {
-                        description: "You can spend $" + roundToTwo(((element.value / 100) * bData["banking"][0].value)/7) + " on yourself today!"
+                        description: "You can spend $" + roundToTwo(((element.value / 100) * bData["banking"][0].value) / 7) + " on yourself today!"
                     }
                 }
 
@@ -102,7 +101,6 @@ export function BudgetContainer({ svgData, bIndex, canDelete, userID, bData }) {
                 setEvents(prevEvents => [...prevEvents, currentEvent]);
             }
         });
-        console.log(events);
     }
 
     useEffect(() => {
@@ -188,15 +186,15 @@ export function BudgetContainer({ svgData, bIndex, canDelete, userID, bData }) {
     return (
         <>
             <div className='bHolder'>
-                <p className='bTitle'>
-                    default title
-                </p>
+                {logged && <p className='bTitle'>
+                    {bData.bname}
+                </p>}
                 {
                     canDelete ? (<button onClick={deleteBudget} className='delete'>
                         Delete
                     </button>) : null
                 }
-                <div className='calenderContainer'>
+                <div className={logged ? 'calenderContainerl' : 'calenderContainer'}>
                     <FullCalendar
                         plugins={[dayGridPlugin, interactionPlugin, rrulePlugin]}
                         initialView="dayGridWeek"

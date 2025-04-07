@@ -271,6 +271,10 @@ function Allocation() {
     };
 
     const checkInputs = async (event) => {
+        let budgetName = "";
+        if(logged){
+            budgetName = prompt("Enter your budget's name here");
+        }
         event.preventDefault();
         const sum = categories.reduce((sum, category) => sum + Number(category.value), 0);
         if (sum != 100) {
@@ -290,6 +294,7 @@ function Allocation() {
                 let aData = JSON.parse(sessionStorage.getItem('currentadata'));
 
                 let fullData = {
+                    bname: budgetName,
                     userID: sessionStorage.getItem('userID'),
                     questionnaire: qData,
                     banking: bData,
@@ -351,7 +356,6 @@ function Allocation() {
                     budgets.push(fullData);
                     sessionStorage.setItem(name, JSON.stringify(budgets));
                 }
-
                 setLoading(true);
                 try {
                     const data = { //send the full budget data and tell backend that user isn't logged
