@@ -39,7 +39,7 @@ export function BudgetContainer({ svgData, bIndex, canDelete, userID, bData }) {
             if (element.name == "Needs") {//create needs event here
                 const currentEvent =
                 {
-                    title: 'Needs!',
+                    title: 'Needs',
                     rrule: {
                         freq: 'weekly',
                         interval: 1,
@@ -48,14 +48,15 @@ export function BudgetContainer({ svgData, bIndex, canDelete, userID, bData }) {
                     },
                     extendedProps: {
                         description: "Set aside $" + roundToTwo((element.value / 100) * bData["banking"][0].value) + " for your needs."
-                    }
+                    },
+                    classNames: ["needs-event"]
                 }
                 setEvents(prevEvents => [...prevEvents, currentEvent]);
 
             } else if (element.name == "Wants") {
                 const currentEvent =
                 {
-                    title: 'Wants!',
+                    title: 'Wants',
                     rrule: {
                         freq: 'daily',
                         interval: 1,
@@ -63,7 +64,8 @@ export function BudgetContainer({ svgData, bIndex, canDelete, userID, bData }) {
                     },
                     extendedProps: {
                         description: "You can spend $" + roundToTwo(((element.value / 100) * bData["banking"][0].value) / 7) + " on yourself today!"
-                    }
+                    },
+                    classNames: ["wants-event"]
                 }
 
                 setEvents(prevEvents => [...prevEvents, currentEvent]);
@@ -71,7 +73,7 @@ export function BudgetContainer({ svgData, bIndex, canDelete, userID, bData }) {
             } else if (element.name == "Savings") {
                 const currentEvent =
                 {
-                    title: 'Save!',
+                    title: 'Save',
                     rrule: {
                         freq: 'weekly',
                         interval: 1,
@@ -80,14 +82,15 @@ export function BudgetContainer({ svgData, bIndex, canDelete, userID, bData }) {
                     },
                     extendedProps: {
                         description: "Put $" + roundToTwo((element.value / 100) * bData["banking"][0].value) + " in some savings/investments today."
-                    }
+                    },
+                    classNames: ["savings-event"]
                 }
                 setEvents(prevEvents => [...prevEvents, currentEvent]);
 
             } else {//extra allocation event
                 const currentEvent =
                 {
-                    title: element.name + "!",
+                    title: element.name,
                     rrule: {
                         freq: 'weekly',
                         interval: 1,
@@ -96,7 +99,8 @@ export function BudgetContainer({ svgData, bIndex, canDelete, userID, bData }) {
                     },
                     extendedProps: {
                         description: "Set aside $" + roundToTwo((element.value / 100) * bData["banking"][0].value) + " to save for " + element.name + "."
-                    }
+                    },
+                    classNames: ["extra-event"]
                 }
                 setEvents(prevEvents => [...prevEvents, currentEvent]);
             }
@@ -218,7 +222,7 @@ export function BudgetContainer({ svgData, bIndex, canDelete, userID, bData }) {
                     />
 
                     {tooltip.visible && (
-                        <div className="tooltip" style={{ position: 'relative', left: "20%", zIndex: 1000 }}>
+                        <div className="tooltip" style={{ position: 'relative', left: "20%", zIndex: 1000, fontSize: '4vh'}}>
                             {tooltip.content}
                         </div>
                     )}
