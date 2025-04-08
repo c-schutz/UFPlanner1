@@ -20,6 +20,8 @@ nav {
     flex-direction: row;
     justify-content: space-between;
     margin-top: 0;
+    box-shadow: .5vh 1vh .5vh .5vh rgba(0, 0, 0, 0.2);
+    border-radius: 1vw;
 }
 
 li {
