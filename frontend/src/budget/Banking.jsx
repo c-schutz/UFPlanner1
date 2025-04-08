@@ -73,7 +73,7 @@ function Banking() {
                         <div key={category.id}>
                             <label className='lstyleb'>
                                 {category.name}:
-                                <input
+                                <input 
                                     type="number"
                                     value={category.value}
                                     onChange={(e) => handleInputChange(category.id, e.target.value)}

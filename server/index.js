@@ -28,7 +28,6 @@ app.post('/Budget/Allocation', async (req, res) => {
   try {
     const userID = parseInt(req.body.data.userID, 10);
     const budgetName = req.body.data.bname;
-    console.log(budgetName);
     const { data: budgetData } = req.body;
     const height = req.body.screenheight;
     console.log("Received data:", req.body);
