@@ -96,12 +96,11 @@ app.post("/login", async (req, res) => {
       user: user // Optionally return more user details as needed
     });
 
-  } catch (error) {
-    console.error("Database error:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
+    } catch (error) {
+        console.error("Database error:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
 });
-
 app.post("/signup", async (req, res) => {
   const { email, password } = req.body;
 
