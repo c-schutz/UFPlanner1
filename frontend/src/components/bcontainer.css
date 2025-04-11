@@ -21,7 +21,7 @@
     left: 0;
     margin: 1vh;
     /* Add some margin */
-    font-size: larger;
+    font-size: xx-large;
     padding: 0.5vh 1vh;
     /* Add some padding */
 }
@@ -106,15 +106,46 @@
     opacity: 80%;
 }
 
-.calenderContainer{
+.calenderContainerl{
     position: absolute;
     top: 17%;
     width: 65%;
     height: 60%;
     z-index: 10;
-    /* background-color: red; */
+}
+
+.calenderContainer{
+    position: absolute;
+    top: 8%;
+    width: 65%;
+    height: 60%;
+    z-index: 10;
 }
 
 .toolTip{
     z-index: 10;
+}
+
+.needs-event {
+    background-color: rgb(247, 0, 0) !important; /* Apply red background to all events */
+    height: 5vh;
+    font-size: x-large;
+}
+
+.wants-event {
+    background-color: lightskyblue!important; /* Apply red background to all events */
+    height: 5vh;
+    font-size: x-large;
+}
+
+.savings-event {
+    background-color: rgb(0, 194, 32) !important; /* Apply red background to all events */
+    height: 5vh;
+    font-size: x-large;
+}
+
+.extra-event {
+    background-color: rgb(89, 0, 190) !important; /* Apply red background to all events */
+    height: 5vh;
+    font-size: x-large;
 }

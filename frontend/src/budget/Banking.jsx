@@ -71,9 +71,9 @@ function Banking() {
                 <form onSubmit={checkInputs} className='form'>
                     {categories.map((category) => (
                         <div key={category.id}>
-                            <label className='lStyle'>
+                            <label className='lstyleb'>
                                 {category.name}:
-                                <input
+                                <input 
                                     type="number"
                                     value={category.value}
                                     onChange={(e) => handleInputChange(category.id, e.target.value)}

@@ -47,13 +47,14 @@ function Questionnaire() {
 
     const backClick = () => {
         sessionStorage.removeItem('currentqdata');
+        sessionStorage.removeItem('currentbdata');
         navigate('/Budget');
     }
 
     return (
         <>
             <p>
-                Input your budgetting information here!
+                First, answer these questions.
             </p>
             <hr className="ahr"></hr>
             <div className='formHandle'>

@@ -7,11 +7,10 @@ body {
 }
 
 nav {
-    width: 100%;
-    margin: 0;
+    margin: 1vh;
     position: sticky;
     top: 0px;
-    background-color: orange;
+    background-color: #FF7F22;
     border-radius: 1vh;
     z-index: 1000;
 }
@@ -21,7 +20,8 @@ nav {
     flex-direction: row;
     justify-content: space-between;
     margin-top: 0;
-
+    box-shadow: .5vh 1vh .5vh .5vh rgba(0, 0, 0, 0.2);
+    border-radius: 1vw;
 }
 
 li {

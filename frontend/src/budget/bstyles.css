@@ -20,6 +20,7 @@ body {
     justify-content: center;
     margin-left: 2vw;
     margin-top: 2vh;
+    box-shadow: .5vh 1vh .5vh .5vh rgba(0, 0, 0, 0.2);
 }
 
 /* .new-budget-button:hover {
