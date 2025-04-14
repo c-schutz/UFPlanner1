@@ -20,6 +20,7 @@ nav {
     flex-direction: row;
     justify-content: space-between;
     margin-top: 0;
+    align-items: center;
     box-shadow: .5vh 1vh .5vh .5vh rgba(0, 0, 0, 0.2);
     border-radius: 1vw;
 }
@@ -51,4 +52,9 @@ li {
 
 .nospace {
     position: absolute;
-}
+} 
+.logo-image {
+    height: 35px; /* Adjust this height as needed */
+    width: auto;
+    display: block;
+  }

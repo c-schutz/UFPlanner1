@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors"; // Import the CORS package
 import { Visualize } from './datacollect.js';
 import pool from "./database.js"
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcryptjs'; 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
