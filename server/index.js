@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors"; // Import the CORS package
 import { Visualize } from './datacollect.js';
 import pool from "./database.js"
+import bcrypt from 'bcryptjs';
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -85,7 +86,9 @@ app.post("/login", async (req, res) => {
 
     const user = rows[0];
 
-    if (user.password !== password) {
+    const checkPass = await bcrypt.compare(password, user.password);
+
+    if (!checkPass) {
       return res.status(401).json({ message: "Invalid password" });
     }
 
@@ -114,8 +117,9 @@ app.post("/signup", async (req, res) => {
     if (checkEmail.length > 0) {
       return res.status(400).json({ message: "Email already exists" });
     }
+    const hashedPassword = await bcrypt.hash(password, 10); 
 
-    const [result] = await pool.query("INSERT INTO users (email, password) VALUES (?, ?)", [email, password]);
+    const [result] = await pool.query("INSERT INTO users (email, password) VALUES (?, ?)", [email, hashedPassword]);
 
     if (result.affectedRows > 0) {
       const userId = result.insertId; // Get the ID of the newly created user
