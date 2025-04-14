@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { useVData } from "../Vcontext";
-
+import './Account.css';
 
 const Summary = ({ handleStatus }) => {
     const { logged, setLogged } = useVData();
@@ -8,11 +8,12 @@ const Summary = ({ handleStatus }) => {
     const signout = () => {
         handleStatus('login');
         setLogged(false);
+        sessionStorage.clear();
     }
 
     return (
         <>
-            <div>Account Summary</div>
+            <div className="account-title">Account Summary</div>
             <div><button onClick={signout}>Signout</button></div>
         </>
     );

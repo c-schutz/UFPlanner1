@@ -1,14 +1,19 @@
 import {React, useState} from "react";
 import { useVData } from "../Vcontext";
-
+import './Account.css';
 const Signup = ({handleStatus}) => {
     const[email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-        
+    const [confirmPassword, setConfirmPassword] = useState('');
+  
         const handleSubmit = async (e) => {
           e.preventDefault(); // Prevent page refresh
-  
+          if (password !== confirmPassword) {
+            setError("Passwords do not match.");
+            return;
+          }
+          setError('');
           try {
               const response = await fetch("http://localhost:3001/signup", {
                   method: "POST",
@@ -19,11 +24,16 @@ const Signup = ({handleStatus}) => {
               const data = await response.json();
 
               if (!response.ok) {
-                  setError(data.message);
-                  return;
+                setError(data.message);
+                setTimeout(() => {
+                  setError(""); // Clear the error message after 2 seconds
+                }, 2000); // 2000 ms = 2 seconds
+                return;
               }
   
-              console.log("Signup successful:", data);
+              console.log("Signup successful:", data); 
+              setError("signup") 
+
               sessionStorage.setItem('userID', JSON.stringify(data.userID));
               handleStatus("login"); // Redirect to another page
   
@@ -36,9 +46,9 @@ const Signup = ({handleStatus}) => {
 
     return (
       <>
-      <div>Signup Feature</div>
-      <form onSubmit={handleSubmit}>
-        <div>
+      <div className="account-title">Signup</div>
+      <form className="account-form" onSubmit={handleSubmit}>
+      <div>
           <input
             type="email"
             placeholder="Email"
@@ -55,11 +65,20 @@ const Signup = ({handleStatus}) => {
           />
         </div>
         <div>
-          <button type="submit">Signup</button>
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </div>
+        <div>
+          <button className="account-action" type="submit">Signup</button>
         </div>
       </form>
-      <div><button onClick={() => handleStatus('login')}>Login</button></div>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <div><button className = "account-switch" onClick={() => handleStatus('login')}>Already have an account? Login</button></div>
+      {error && <p className="error-message">{error}</p>}
+
 
     </>
         
