@@ -96,7 +96,8 @@ app.post("/login", async (req, res) => {
     res.json({
       message: "Login successful",
       userID: user.id, // Return the user's ID
-      user: user // Optionally return more user details as needed
+      email: user.email,
+      date_created: user.created_at 
     });
 
     } catch (error) {
