@@ -26,12 +26,16 @@ const Summary = ({ handleStatus }) => {
 
     return (
         <>
-      <div className="account-title">Account Summary</div>
-      <div><strong>Hello,</strong> {fName}!</div>
-      <div><strong>Email:</strong> {email}</div>
-      <div><strong>Date Created:</strong> {dateCreated}</div>
-      <div><button onClick={signout}>Signout</button></div>
-    </>
+        <div className="account-summary">
+        <div className="account-title">Account Summary</div>
+        <div className="account-line"><strong>Hello,</strong> {fName}!</div>
+        <div className="account-line"><strong>Email:</strong> {email}</div>
+        <div className="account-line"><strong>Date Created:</strong> {dateCreated}</div>
+        <div>
+         <button className="account-action" onClick={signout}>Signout</button>
+        </div>
+        </div>
+        </>
     );
 };
 
