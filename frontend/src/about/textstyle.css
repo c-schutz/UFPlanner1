@@ -69,6 +69,29 @@ p {
     padding-top: 5vh;
     padding-bottom: 3vh;
 }
+/*smaller screen sizes*/
+@media (max-width: 900px) {
+    h1 {
+      font-size: 5vh;
+    }
+  
+    p {
+      font-size: 2.8vh;
+      max-width: 80vw;
+    }
+  }
+  
+  /* Small screens (mobile) */
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 4vh;
+    }
+  
+    p {
+      font-size: 2.3vh;
+      max-width: 90vw;
+    }
+  }
 
 @keyframes float {
     0% {
