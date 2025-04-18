@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './nbstyles.css'; 
-import logo from "./images/logo.jpg"
+import logo from "./images/IMG_1309.jpg"
 
 function Navbar() {
     return (
