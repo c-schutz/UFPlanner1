@@ -54,6 +54,13 @@
     cursor: pointer;
     text-decoration: underline;
     margin-top: 10px;
+    
+  }
+
+  .account-switch-container{
+    display: flex;
+    justify-content: center;
+    width: 100%;
   }
   
   .account-switch:hover {
