@@ -40,10 +40,14 @@ body {
     border-radius: .1vh;
 }
 
+
 .btitle {
     font-family: "Lato", serif;
-    text-align: center;
     font-size: 4vh;
-    margin: 0;
-    padding: 0;
+    text-align: center;
+    margin: 2vh auto 2vh auto;
+    max-width: 80%;
+    line-height: 1.4;
+    text-shadow: 0.25vw 0.5vw 1vw rgba(0, 0, 0, 0.6);
+    color: white;
 }
