@@ -21,6 +21,15 @@
     border: 1px solid #ccc;
     border-radius: 6px;
   }
+
+  .account-title-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* This centers everything horizontally */
+    justify-content: center;
+    width: 100%;
+    font-size: 40px;
+  }
   
   .account-action {
     padding: 10px 20px;
