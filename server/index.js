@@ -85,7 +85,6 @@ app.post("/login", async (req, res) => {
     }
 
     const user = rows[0];
-
     const checkPass = await bcrypt.compare(password, user.password);
 
     if (!checkPass) {
@@ -97,7 +96,8 @@ app.post("/login", async (req, res) => {
       message: "Login successful",
       userID: user.id, // Return the user's ID
       email: user.email,
-      date_created: user.created_at 
+      date_created: user.created_at,
+      name: user.first_name
     });
 
     } catch (error) {
@@ -106,7 +106,7 @@ app.post("/login", async (req, res) => {
     }
 });
 app.post("/signup", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, firstName, lastName } = req.body;
 
   if (!email || !password) {
     return res.status(400).json({ message: "Email and password are required" });
@@ -120,7 +120,7 @@ app.post("/signup", async (req, res) => {
     }
     const hashedPassword = await bcrypt.hash(password, 10); 
 
-    const [result] = await pool.query("INSERT INTO users (email, password) VALUES (?, ?)", [email, hashedPassword]);
+    const [result] = await pool.query("INSERT INTO users (email, password, first_name,last_name) VALUES (?, ?, ?, ?)", [email, hashedPassword, firstName,lastName]);
 
     if (result.affectedRows > 0) {
       const userId = result.insertId; // Get the ID of the newly created user

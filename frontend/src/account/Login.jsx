@@ -30,7 +30,8 @@ const Login = ({ handleStatus }) => {
       console.log("Login successful:", data);
       sessionStorage.setItem('userID', JSON.stringify(data.userID));
       sessionStorage.setItem('email', JSON.stringify(data.email));
-      sessionStorage.setItem('date_created', JSON.stringify(data.date_created));
+      sessionStorage.setItem('date_created', JSON.stringify(data.date_created)); 
+      sessionStorage.setItem('name',JSON.stringify(data.name))
       //logged in logic here
       setLogged(true);
       handleStatus("summary"); // Redirect to another page

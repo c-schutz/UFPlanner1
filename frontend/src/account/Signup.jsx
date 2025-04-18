@@ -2,6 +2,8 @@ import {React, useState} from "react";
 import { useVData } from "../Vcontext";
 import './Account.css';
 const Signup = ({handleStatus}) => {
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const[email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -13,12 +15,17 @@ const Signup = ({handleStatus}) => {
             setError("Passwords do not match.");
             return;
           }
+          setError(''); 
+          if (!firstName.trim() || !lastName.trim()) {
+            setError("Fill in first and last names");
+            return;
+          }
           setError('');
           try {
               const response = await fetch("http://localhost:3001/signup", {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ email, password }),
+                  body: JSON.stringify({ email, password, firstName, lastName }),
               });
   
               const data = await response.json();
@@ -49,11 +56,30 @@ const Signup = ({handleStatus}) => {
       <div className="account-title">Signup</div>
       <form className="account-form" onSubmit={handleSubmit}>
       <div>
+      <input
+        type="text"
+        placeholder="First Name"
+        value={firstName}
+        onChange={(e) => setFirstName(e.target.value)}
+        required
+      />
+      </div>
+      <div>
+      <input
+        type="text"
+        placeholder="Last Name"
+        value={lastName}
+        onChange={(e) => setLastName(e.target.value)}
+        required
+      />
+      </div>
+      <div>
           <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
         </div>
         <div>
@@ -62,6 +88,7 @@ const Signup = ({handleStatus}) => {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
         </div>
         <div>
@@ -70,6 +97,7 @@ const Signup = ({handleStatus}) => {
             placeholder="Confirm Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            required
           />
         </div>
         <div>
