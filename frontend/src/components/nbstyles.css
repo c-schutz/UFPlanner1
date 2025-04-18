@@ -27,6 +27,7 @@ nav {
     box-shadow: .5vh 1vh .5vh .5vh rgba(0, 0, 0, 0.2);
     border-radius: 5vw;
     gap: 5vh;
+    
 }
 
 li {
@@ -64,4 +65,40 @@ li {
     width: auto;
     display: block;
     transform: scale(1.3);
+  }
+
+  /*for when window widths are smaller*/
+
+  @media (max-width: 1200px) {
+    .links {
+      font-size: 3.5vh; /* Reduce font size */
+    }
+  
+    .logo-image {
+      height: 100px; /* Shrink logo on smaller screens */
+      transform: scale(1.1);
+    }
+  
+    .linklist {
+      gap: 2vh; /* Reduce spacing between nav items */
+      padding: 20px;
+    }
+  }
+  
+  @media (max-width: 800px) {
+    .links {
+      font-size: 2.5vh;
+    }
+  
+    .logo-image {
+      height: 80px;
+      transform: scale(1);
+    }
+  
+    .linklist {
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 15px;
+      gap: 1.5vh;
+    }
   }
