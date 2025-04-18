@@ -45,6 +45,7 @@ body {
   padding-left: .8vw;
   padding-top: .5vh;
   padding-bottom: .5vh;
+  font-size: x-large;
 }
 
 .buttons:hover{
@@ -59,6 +60,7 @@ body {
   font-family: "Lato", serif;
   font-size: 3.5vw;
   font-style: italic;
+  text-align: center;
 }
 
 .ansSeparation{

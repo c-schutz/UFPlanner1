@@ -1,14 +1,19 @@
 const cats = [
     {
        id: 1,
-       name: "cat1",
-       value: ''
+       name: "Needs",
+       value: 50
     },
     {
        id: 2,
-       name: "cat2",
-       value: ''
-    }
+       name: "Wants",
+       value: 30
+    },
+    {
+      id: 3,
+      name: "Savings",
+      value: 20
+   }
  ];
  
  export default cats;
