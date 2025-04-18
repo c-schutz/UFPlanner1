@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './nbstyles.css'; 
-import logo from "./images/UFinancial with background-Picsart-BackgroundRemover.jpg"
+import logo from "./images/logo.png"
 
 function Navbar() {
     return (
