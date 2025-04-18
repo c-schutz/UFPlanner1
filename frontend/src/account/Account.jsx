@@ -35,7 +35,9 @@ const Account = () => {
     <>
       <Navbar />
       <div>
-        <h2>Account Page</h2>
+        <div className = "account-container">
+          <h2 className='account-title-page'>Account Page</h2>
+        </div>
         {renderView()}
       </div>
     </>

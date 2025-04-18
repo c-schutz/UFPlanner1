@@ -104,7 +104,9 @@ const Signup = ({handleStatus}) => {
           <button className="account-action" type="submit">Signup</button>
         </div>
       </form>
-      <div><button className = "account-switch" onClick={() => handleStatus('login')}>Already have an account? Login</button></div>
+      <div className = "account-switch-container">
+        <button className = "account-switch" onClick={() => handleStatus('login')}>Already have an account? Login</button>
+      </div>
       {error && <p className="error-message">{error}</p>}
 
 
