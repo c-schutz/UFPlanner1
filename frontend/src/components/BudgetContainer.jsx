@@ -199,7 +199,7 @@ export function BudgetContainer({ svgData, bIndex, canDelete, userID, bData }) {
                     </button>) : null
                 }
                 <div className='contentWrapper'>
-                    <div className={logged ? 'calenderContainerl' : 'calenderContainer'}>
+                    <div className={logged ? 'calendarContainerl' : 'calendarContainer'}>
                         <FullCalendar
                             plugins={[dayGridPlugin, interactionPlugin, rrulePlugin]}
                             initialView="dayGridWeek"
