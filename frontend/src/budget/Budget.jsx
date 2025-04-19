@@ -106,12 +106,14 @@ function Budget() {
                 </motion.button>
             </div>
             {/* pass in the svgData to render in each budget */}
-            {Array.isArray(svgData) && svgData.map((svg, index) => (
-                !logged && svg ? <BudgetContainer bData={budgetData[index]} key={index} svgData={svg} bIndex={index} canDelete={false}/> : null
-            ))}
-            {Array.isArray(svgData) && svgData.map((svg, index) => (
-                logged && svg ? <BudgetContainer bData={budgetData[index]} key={index} bIndex={index} svgData={svg} canDelete={true}/> : null
-            ))}
+            <div className = "page-container">
+                {Array.isArray(svgData) && svgData.map((svg, index) => (
+                    !logged && svg ? <BudgetContainer bData={budgetData[index]} key={index} svgData={svg} bIndex={index} canDelete={false}/> : null
+                ))}
+                {Array.isArray(svgData) && svgData.map((svg, index) => (
+                    logged && svg ? <BudgetContainer bData={budgetData[index]} key={index} bIndex={index} svgData={svg} canDelete={true}/> : null
+                ))}
+            </div>          
         </> 
     );
 }
