@@ -27,7 +27,7 @@ nav {
     background-color: #FF7F22;
     box-shadow: .5vh 1vh .5vh .5vh rgba(0, 0, 0, 0.2);
     border-radius: 5vw;
-    gap: 5vh;
+    gap: 5vw;
     
 }
 
@@ -40,7 +40,7 @@ li {
 
 /* Font taken from google fonts */
 .links {
-    font-size: 5vh;
+    font-size: 3vw;
     font-family: "Lato", serif;
 }
 
@@ -71,9 +71,6 @@ li {
   /*for when window widths are smaller*/
 
   @media (max-width: 1200px) {
-    .links {
-      font-size: 3.5vh; /* Reduce font size */
-    }
   
     .logo-image {
       height: 100px; /* Shrink logo on smaller screens */
@@ -87,10 +84,6 @@ li {
   }
   
   @media (max-width: 800px) {
-    .links {
-      font-size: 2.5vh;
-    }
-  
     .logo-image {
       height: 80px;
       transform: scale(1);

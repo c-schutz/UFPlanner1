@@ -26,7 +26,7 @@
     left: 0;
     margin: 1vh;
     /* Add some margin */
-    font-size: xx-large;
+    font-size: clamp(12px, 3vh, 50px);
     padding: 0.5vh 0vh;
     /* Add some padding */
 }
@@ -43,7 +43,8 @@
 
 .svgContainer {
     flex: 1;
-    max-width: 50%;
+    width: 50vw;
+    height: 50vh;
     display: flex;
     justify-content: center;
     align-items: center;
