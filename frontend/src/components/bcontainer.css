@@ -116,7 +116,7 @@
     opacity: 80%;
 }
 
-.calenderContainerl{
+.calendarContainerl , .calendarContainer{
     max-width: 55%;
     overflow: visible;
     display: flex;
@@ -124,6 +124,7 @@
     position: relative;
     height: fit-content;
 }
+
 
 .fc-view-harness {
     min-height: 0 !important;
