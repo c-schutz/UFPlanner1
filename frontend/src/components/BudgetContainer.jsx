@@ -198,45 +198,47 @@ export function BudgetContainer({ svgData, bIndex, canDelete, userID, bData }) {
                         Delete
                     </button>) : null
                 }
-                <div className={logged ? 'calenderContainerl' : 'calenderContainer'}>
-                    <FullCalendar
-                        plugins={[dayGridPlugin, interactionPlugin, rrulePlugin]}
-                        initialView="dayGridWeek"
-                        headerToolbar={{
-                            start: 'prev,next',
-                            center: '',
-                            end: 'today'
-                        }}
-                        height="50vh"
-                        events={events}
-                        eventContent={(eventInfo) => {
-                            // You can return a custom JSX element
-                            return (
-                                <>
-                                    <b>{eventInfo.event.title}</b> {/* Only display the title */}
-                                </>
-                            );
-                        }}
-                        eventMouseEnter={whenMouseEnters}
-                        eventMouseLeave={whenMouseLeaves}
-                    />
-
-                    {tooltip.visible && (
-                        <div className="tooltip" style={{ position: 'relative', left: "20%", zIndex: 1000, fontSize: '4vh'}}>
-                            {tooltip.content}
-                        </div>
-                    )}
-                </div>
                 <div className='contentWrapper'>
+                    <div className={logged ? 'calenderContainerl' : 'calenderContainer'}>
+                        <FullCalendar
+                            plugins={[dayGridPlugin, interactionPlugin, rrulePlugin]}
+                            initialView="dayGridWeek"
+                            headerToolbar={{
+                                start: 'prev,next',
+                                center: '',
+                                end: 'today'
+                            }}                         
+                            contentHeight="auto"
+                            events={events}
+                            eventContent={(eventInfo) => {
+                                // You can return a custom JSX element
+                                return (
+                                    <>
+                                        <b>{eventInfo.event.title}</b> {/* Only display the title */}
+                                    </>
+                                );
+                            }}
+                            eventMouseEnter={whenMouseEnters}
+                            eventMouseLeave={whenMouseLeaves}
+                        />
+
+                        {tooltip.visible && (
+                            <div className="tooltip">
+                                {tooltip.content}
+                            </div>
+                        )}
+                        
+                    </div>
                     {isActive && (
-                        <div className='svgContainer' dangerouslySetInnerHTML={{ __html: data }} />
-                    )}
+                            <div className='svgContainer' dangerouslySetInnerHTML={{ __html: data }} />
+                        )}
+                </div>
+                    
                     {/* <div className='buttonContainer'> move somewhere else
                         <button onClick={handleData} className='updateButton'>
                             Data Input
                         </button>
                     </div> */}
-                </div>
             </div>
         </>
     );

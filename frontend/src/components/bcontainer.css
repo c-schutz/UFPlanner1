@@ -1,18 +1,23 @@
 .bHolder {
     /* allows positioning within the div */
     position: relative;
-
     /* sets the distance between outline and border */
     outline-offset: 1vw;
     outline-style: solid;
-    outline-width: .1vh;
+    outline-width: .5vh;
     border-radius: .1vw;
-    margin: 5vh;
-    z-index: 0;
     padding: 2vh;
-    /* Add padding to ensure content doesn't touch the border */
     min-height: 20vh;
-    /* Ensure minimum height */
+    max-height: 50vh;
+    overflow: auto;
+    width: 80%;
+    margin: 5vh auto 10vh auto;
+    max-width: 1200px;
+    z-index: 0;
+}
+
+.page-container {
+    padding-bottom: 10vh;
 }
 
 .bTitle {
@@ -22,28 +27,32 @@
     margin: 1vh;
     /* Add some margin */
     font-size: xx-large;
-    padding: 0.5vh 1vh;
+    padding: 0.5vh 0vh;
     /* Add some padding */
 }
 
 .contentWrapper {
-    position: relative;
     display: flex;
+    flex-wrap: wrap; /* stacks on small screens */
     justify-content: space-between;
-    align-items: flex-end;
-    /* Align items at the bottom */
+    align-items: stretch;
     width: 100%;
+    gap: 2vh;
     height: 100%;
 }
 
 .svgContainer {
     flex: 1;
-    /* Take up available space */
+    max-width: 50%;
     display: flex;
-    justify-content: flex-end;
-    /* Align to the right */
-    margin-right: 2vh;
-    /* Space between SVG and button */
+    justify-content: center;
+    align-items: center;
+}
+
+.svgContainer svg {
+    width: 100%;
+    max-height: 40vh;
+    object-fit: contain;
 }
 
 .buttonContainer {
@@ -107,23 +116,37 @@
 }
 
 .calenderContainerl{
-    position: absolute;
-    top: 17%;
-    width: 65%;
-    height: 60%;
-    z-index: 10;
+    max-width: 55%;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: fit-content;
 }
 
-.calenderContainer{
-    position: absolute;
-    top: 8%;
-    width: 65%;
-    height: 60%;
-    z-index: 10;
+.fc-view-harness {
+    min-height: 0 !important;
+    max-height: 40vh !important;
+    overflow: hidden;
 }
 
-.toolTip{
+
+
+.tooltip{
+    position: relative;
+    display: flex;
+    top: 100%; /* puts it right below the calendar container */
+    left: 50%; /* centers horizontally */
+    transform: translateX(-50%); /* perfect center shift */
+    margin-top: 5vh;
     z-index: 10;
+    font-size: 2.5vh;
+    padding: 1vh 2vh;
+    border: 1px solid #ccc;
+    border-radius: 1vh;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
+    pointer-events: none;
+    white-space: pre-wrap; 
 }
 
 .needs-event {
