@@ -10,7 +10,7 @@ nav {
     width: 90%;
     max-width: 1900px;
     position: sticky;
-    margin: 80px auto 0;
+    margin: 30px auto 0;
     background-color: #FF7F22;
     border-radius: 1vh;
     z-index: 1000;
@@ -20,6 +20,7 @@ nav {
 .linklist{
     display: flex;
     flex-direction: row;
+    max-height: 100px;
     padding: 30px;
     justify-content: flex-start;
     align-items: center;
@@ -64,7 +65,7 @@ li {
     height: 150px; /* Adjust this height as needed */
     width: auto;
     display: block;
-    transform: scale(1.3);
+    transform: scale(1.2);
   }
 
   /*for when window widths are smaller*/
