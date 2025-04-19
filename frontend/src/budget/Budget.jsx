@@ -98,12 +98,14 @@ function Budget() {
             <Navbar />
             <p className="btitle">Here you can create your own budgets!</p>
             <hr className="bhr" />
-            <div ref={scope}>
-                <motion.button className='new-budget-button' onClick={handleClick}
-                    whileHover={{ scale: 1.1 }}>
-                    <span>+</span>
-                    New Budget
-                </motion.button>
+            <div className = "new-budget-wrapper">
+                <div ref={scope}>
+                    <motion.button className='new-budget-button' onClick={handleClick}
+                        whileHover={{ scale: 1.1 }}>
+                        <span>+</span>
+                        New Budget
+                    </motion.button>
+                </div>
             </div>
             {/* pass in the svgData to render in each budget */}
             <div className = "page-container">

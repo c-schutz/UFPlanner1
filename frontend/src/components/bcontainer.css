@@ -151,24 +151,31 @@
 
 .needs-event {
     background-color: rgb(247, 0, 0) !important; /* Apply red background to all events */
-    height: 5vh;
     font-size: x-large;
 }
 
 .wants-event {
     background-color: lightskyblue!important; /* Apply red background to all events */
-    height: 5vh;
     font-size: x-large;
 }
 
 .savings-event {
     background-color: rgb(0, 194, 32) !important; /* Apply red background to all events */
-    height: 5vh;
     font-size: x-large;
 }
 
 .extra-event {
     background-color: rgb(89, 0, 190) !important; /* Apply red background to all events */
-    height: 5vh;
     font-size: x-large;
+}
+
+.needs-event,
+.wants-event,
+.savings-event,
+.extra-event {
+  font-size: 1.5vw;
+  height: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

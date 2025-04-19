@@ -6,6 +6,14 @@ body {
     min-height: 100vh;
 }
 
+.new-budget-wrapper {
+    display: flex;
+    max-width: 1400px;
+    width: 80%;
+    margin: 1vh auto 0 auto;
+    position: relative;
+  }
+
 .new-budget-button {
     margin-top: 2vh;
     background-color: lightcoral;
@@ -18,7 +26,6 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-left: 10%;
     margin-top: 2vh;
     box-shadow: .5vh 1vh .5vh .5vh rgba(0, 0, 0, 0.2);
 }
