@@ -10,7 +10,7 @@ nav {
     width: 90%;
     max-width: 1900px;
     position: sticky;
-    margin: 80px auto 0;
+    margin: 30px auto 0;
     background-color: #FF7F22;
     border-radius: 1vh;
     z-index: 1000;
@@ -20,13 +20,14 @@ nav {
 .linklist{
     display: flex;
     flex-direction: row;
+    max-height: 100px;
     padding: 30px;
     justify-content: flex-start;
     align-items: center;
     background-color: #FF7F22;
     box-shadow: .5vh 1vh .5vh .5vh rgba(0, 0, 0, 0.2);
     border-radius: 5vw;
-    gap: 5vh;
+    gap: 5vw;
     
 }
 
@@ -39,7 +40,7 @@ li {
 
 /* Font taken from google fonts */
 .links {
-    font-size: 5vh;
+    font-size: 3vw;
     font-family: "Lato", serif;
 }
 
@@ -64,15 +65,12 @@ li {
     height: 150px; /* Adjust this height as needed */
     width: auto;
     display: block;
-    transform: scale(1.3);
+    transform: scale(1.2);
   }
 
   /*for when window widths are smaller*/
 
   @media (max-width: 1200px) {
-    .links {
-      font-size: 3.5vh; /* Reduce font size */
-    }
   
     .logo-image {
       height: 100px; /* Shrink logo on smaller screens */
@@ -86,10 +84,6 @@ li {
   }
   
   @media (max-width: 800px) {
-    .links {
-      font-size: 2.5vh;
-    }
-  
     .logo-image {
       height: 80px;
       transform: scale(1);
