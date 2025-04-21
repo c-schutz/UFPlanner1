@@ -38,5 +38,4 @@ const Summary = ({ handleStatus }) => {
         </>
     );
 };
-//ppp
 export default Summary;
