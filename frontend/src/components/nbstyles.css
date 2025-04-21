@@ -7,22 +7,28 @@ body {
 }
 
 nav {
-    margin: 1vh;
+    width: 90%;
+    max-width: 1900px;
     position: sticky;
-    top: 0px;
+    margin: 30px auto 0;
     background-color: #FF7F22;
     border-radius: 1vh;
     z-index: 1000;
+    background: none;
 }
 
 .linklist{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    margin-top: 0;
+    max-height: 100px;
+    padding: 30px;
+    justify-content: flex-start;
     align-items: center;
+    background-color: #FF7F22;
     box-shadow: .5vh 1vh .5vh .5vh rgba(0, 0, 0, 0.2);
-    border-radius: 1vw;
+    border-radius: 5vw;
+    gap: 5vw;
+    
 }
 
 li {
@@ -34,7 +40,7 @@ li {
 
 /* Font taken from google fonts */
 .links {
-    font-size: 5vh;
+    font-size: 3vw;
     font-family: "Lato", serif;
 }
 
@@ -42,19 +48,51 @@ li {
     opacity: 70%;
 }
 
-.link1 {
-    margin-left: 40vh;
+.links a{
+    text-decoration: none;
 }
 
-.link3 {
-    margin-right: 10vh;
+.linklist li:nth-child(4){
+    margin-right: 5%;
 }
 
 .nospace {
-    position: absolute;
+    position: relative;
+    margin-right: auto;
+    margin-left: 5%;
 } 
 .logo-image {
-    height: 35px; /* Adjust this height as needed */
+    height: 150px; /* Adjust this height as needed */
     width: auto;
     display: block;
+    transform: scale(1.2);
+  }
+
+  /*for when window widths are smaller*/
+
+  @media (max-width: 1200px) {
+  
+    .logo-image {
+      height: 100px; /* Shrink logo on smaller screens */
+      transform: scale(1.1);
+    }
+  
+    .linklist {
+      gap: 2vh; /* Reduce spacing between nav items */
+      padding: 20px;
+    }
+  }
+  
+  @media (max-width: 800px) {
+    .logo-image {
+      height: 80px;
+      transform: scale(1);
+    }
+  
+    .linklist {
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 15px;
+      gap: 1.5vh;
+    }
   }

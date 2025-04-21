@@ -15,7 +15,7 @@ const Summary = ({ handleStatus }) => {
     console.log(name)
     if (storedEmail && storedDate && name) {
       setEmail(storedEmail.slice(1,-1));
-      setDateCreated(storedDate.slice(1, 10));
+      setDateCreated(storedDate.slice(1, 11));
       setName(name.slice(1,-1));
     }
   }, []);

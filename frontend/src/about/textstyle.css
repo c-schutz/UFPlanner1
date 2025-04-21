@@ -29,14 +29,13 @@ h1 {
 
 p {
     font-family: "Lato", serif;
-    margin-left: 5vw;
-    margin-right: 5vw;
-    margin-bottom: 10vh;
+    margin: 0 auto 10vh auto;
     font-size: 3.5vh;
     text-align: center;
     line-height: 1.5;
     text-shadow: .25vw .5vw 1vw rgb(0, 0, 0);
-
+    display: block;
+    width: 60%;
 }
 
 .ahr {
@@ -58,14 +57,41 @@ p {
 }
 
 .section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     background: linear-gradient(to bottom,
             #00479e 0%,
             #1860a8 50%,
             /* An even more muted blue that's closer to the background color */
             #00479e 100%);
     padding-top: 5vh;
-    padding-bottom: 5vh;
+    padding-bottom: 3vh;
 }
+/*smaller screen sizes*/
+@media (max-width: 900px) {
+    h1 {
+      font-size: 5vh;
+    }
+  
+    p {
+      font-size: 2.8vh;
+      max-width: 80vw;
+    }
+  }
+  
+  /* Small screens (mobile) */
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 4vh;
+    }
+  
+    p {
+      font-size: 2.3vh;
+      max-width: 90vw;
+    }
+  }
 
 @keyframes float {
     0% {
