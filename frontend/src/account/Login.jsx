@@ -23,7 +23,7 @@ const Login = ({ handleStatus }) => {
         setError(data.message);
         setTimeout(() => {
           setError(""); // Clear the error message after 2 seconds
-        }, 2000); // 2000 ms = 2 seconds
+        }, 2000); 
         return;
       }
 
