@@ -25,7 +25,7 @@
   .account-title-page{
     display: flex;
     flex-direction: column;
-    align-items: center; /* This centers everything horizontally */
+    align-items: center; 
     justify-content: center;
     width: 100%;
     font-size: 40px;
@@ -80,9 +80,6 @@
     margin-top: 5px;
     font-weight: bold;
   }
-  
-  /* New classes added below */
-  
   .account-summary {
     background-color: #1e1e1e;
     padding: 20px;
