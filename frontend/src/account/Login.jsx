@@ -1,17 +1,12 @@
 import { React, useState } from "react";
 import { useVData } from "../Vcontext";
-
+import './Account.css';
 const Login = ({ handleStatus }) => {
   const { logged, setLogged } = useVData();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  function checkInputs() {
-    console.log("Email: ", email);
-    console.log("password: ", password);
-
-  }
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent page refresh
 
@@ -26,11 +21,17 @@ const Login = ({ handleStatus }) => {
 
       if (!response.ok) {
         setError(data.message);
+        setTimeout(() => {
+          setError(""); // Clear the error message after 2 seconds
+        }, 2000); 
         return;
       }
 
       console.log("Login successful:", data);
       sessionStorage.setItem('userID', JSON.stringify(data.userID));
+      sessionStorage.setItem('email', JSON.stringify(data.email));
+      sessionStorage.setItem('date_created', JSON.stringify(data.date_created)); 
+      sessionStorage.setItem('name',JSON.stringify(data.name))
       //logged in logic here
       setLogged(true);
       handleStatus("summary"); // Redirect to another page
@@ -44,8 +45,8 @@ const Login = ({ handleStatus }) => {
 
   return (
     <>
-      <div>Login Feature</div>
-      <form onSubmit={handleSubmit}>
+      <div className="account-title">Login </div>
+      <form className="account-form" onSubmit={handleSubmit}>
         <div>
           <input
             type="email"
@@ -63,11 +64,14 @@ const Login = ({ handleStatus }) => {
           />
         </div>
         <div>
-          <button type="submit">Login</button>
+          <button className="account-action" type="submit">Login</button>
         </div>
       </form>
-      <div><button onClick={() => handleStatus('signup')}>Sign Up</button></div>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <div className = "account-switch-container">
+        <div>
+          <button className="account-switch" onClick={() => handleStatus('signup')}>Don't have an account? Sign Up</button></div>
+      </div>
+      {error && <p className="error-message">{error}</p>}
 
     </>
   );

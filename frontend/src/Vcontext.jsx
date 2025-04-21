@@ -6,7 +6,6 @@ const VDataContext = createContext();
 // Export the provider as its own component
 export const VDataProvider = ({ children }) => {
     const [vData, setVData] = useState(null);
-
     // Initialize the logged state from sessionStorage
     const [logged, setLogged] = useState(() => {
         // Retrieve the logged state from sessionStorage if available

@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors"; // Import the CORS package
 import { Visualize } from './datacollect.js';
 import pool from "./database.js"
+import bcrypt from 'bcryptjs'; 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -84,8 +85,9 @@ app.post("/login", async (req, res) => {
     }
 
     const user = rows[0];
+    const checkPass = await bcrypt.compare(password, user.password);
 
-    if (user.password !== password) {
+    if (!checkPass) {
       return res.status(401).json({ message: "Invalid password" });
     }
 
@@ -93,17 +95,18 @@ app.post("/login", async (req, res) => {
     res.json({
       message: "Login successful",
       userID: user.id, // Return the user's ID
-      user: user // Optionally return more user details as needed
+      email: user.email,
+      date_created: user.created_at,
+      name: user.first_name
     });
 
-  } catch (error) {
-    console.error("Database error:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
+    } catch (error) {
+        console.error("Database error:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
 });
-
 app.post("/signup", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, firstName, lastName } = req.body;
 
   if (!email || !password) {
     return res.status(400).json({ message: "Email and password are required" });
@@ -115,8 +118,9 @@ app.post("/signup", async (req, res) => {
     if (checkEmail.length > 0) {
       return res.status(400).json({ message: "Email already exists" });
     }
+    const hashedPassword = await bcrypt.hash(password, 10); 
 
-    const [result] = await pool.query("INSERT INTO users (email, password) VALUES (?, ?)", [email, password]);
+    const [result] = await pool.query("INSERT INTO users (email, password, first_name,last_name) VALUES (?, ?, ?, ?)", [email, hashedPassword, firstName,lastName]);
 
     if (result.affectedRows > 0) {
       const userId = result.insertId; // Get the ID of the newly created user
